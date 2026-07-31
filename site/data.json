@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-31T10:21:40+00:00",
+ "generated_at": "2026-07-31T12:30:21+00:00",
  "thresholds": {
   "rel": 80,
   "cmp": 100,
@@ -16,6 +16,17 @@
    "comparable_pct": 100,
    "complete_pct": 80,
    "gate_open": false
+  },
+  "municipality": {
+   "cells": 14745,
+   "present": 14745,
+   "verified": 14745,
+   "vars": 5,
+   "vars_comparable": 5,
+   "reliable_pct": 100,
+   "comparable_pct": 100,
+   "complete_pct": 100,
+   "gate_open": true
   },
   "region": {
    "cells": 48,
@@ -124,8 +135,8 @@
     "cost": "ver",
     "rain": "ver",
     "fire": "ind",
-    "access": "ver",
-    "cadastre": "ver"
+    "cadastre": "ver",
+    "access": "ver"
    },
    "values": {
     "price": {
@@ -144,13 +155,13 @@
      "num": 9000.0,
      "txt": "hele regio, indicatief"
     },
-    "access": {
-     "num": null,
-     "txt": "good"
-    },
     "cadastre": {
      "num": null,
      "txt": "Verouderd"
+    },
+    "access": {
+     "num": null,
+     "txt": "good"
     }
    },
    "score": {
@@ -170,18 +181,14 @@
    "country": "PT",
    "nuts2": "PT16",
    "q": {
-    "access": "ver",
     "price": "ind",
     "cost": "ver",
     "rain": "ver",
     "fire": "ver",
-    "cadastre": "ver"
+    "cadastre": "ver",
+    "access": "ver"
    },
    "values": {
-    "access": {
-     "num": null,
-     "txt": "good"
-    },
     "price": {
      "num": 4750.0,
      "txt": "3100-6400"
@@ -201,6 +208,10 @@
     "cadastre": {
      "num": null,
      "txt": "Ontbreekt"
+    },
+    "access": {
+     "num": null,
+     "txt": "good"
     }
    },
    "score": {
@@ -269,21 +280,21 @@
    "country": "ES",
    "nuts2": "ES41",
    "q": {
-    "cost": "ver",
     "price": "ind",
+    "cost": "ver",
     "rain": "ver",
     "fire": "ind",
     "cadastre": "ver",
     "access": "ver"
    },
    "values": {
-    "cost": {
-     "num": 9.75,
-     "txt": "9–10,5%"
-    },
     "price": {
      "num": 2325.0,
      "txt": "750-3900"
+    },
+    "cost": {
+     "num": 9.75,
+     "txt": "9–10,5%"
     },
     "rain": {
      "num": 924.5,
@@ -319,25 +330,21 @@
    "country": "ES",
    "nuts2": "ES43",
    "q": {
-    "cost": "ver",
-    "cadastre": "ver",
     "price": "ind",
+    "cost": "ver",
     "rain": "ver",
     "fire": "ind",
+    "cadastre": "ver",
     "access": "ver"
    },
    "values": {
-    "cost": {
-     "num": 9.5,
-     "txt": "9–10%"
-    },
-    "cadastre": {
-     "num": null,
-     "txt": "Goed"
-    },
     "price": {
      "num": 4250.0,
      "txt": "3500-5000"
+    },
+    "cost": {
+     "num": 9.5,
+     "txt": "9–10%"
     },
     "rain": {
      "num": 864.0,
@@ -346,6 +353,10 @@
     "fire": {
      "num": 10863.0,
      "txt": "brandvlakte 2023"
+    },
+    "cadastre": {
+     "num": null,
+     "txt": "Goed"
     },
     "access": {
      "num": null,
@@ -517,6 +528,10 @@
    "pending": 1,
    "promoted": 3,
    "rejected": 1
+  },
+  "municipality": {
+   "promoted": 2737,
+   "rejected": 212
   },
   "region": {
    "pending": 3,
