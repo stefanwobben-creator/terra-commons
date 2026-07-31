@@ -2,17 +2,9 @@ name: data
 
 # Handmatig. Geen schema, geen cron.
 #
-# Dit is de knop waarmee je de gemeentelaag binnenhaalt zonder dat er iets
-# automatisch gaat draaien: Actions, "data", "Run workflow". De runner heeft wel
-# internet, deze repo hoeft niets lokaal geinstalleerd te hebben, en de uitkomst
-# is een pull request met een leesbare diff in plaats van een groen vinkje.
-#
 # Twee standen:
 #   1. Zonder lau_url  -> alleen de sonde. Rapporteert welke bronadressen kloppen.
 #   2. Met lau_url     -> haalt op, laadt in, herberekent, en opent een pull request.
-#
-# Zodra dit een paar keer goed is gegaan is er een regel voor nodig om het
-# wekelijks te laten lopen (`schedule:`). Niet eerder.
 
 on:
   workflow_dispatch:
@@ -34,6 +26,10 @@ on:
         required: false
         default: "dehesa"
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   probe:
     runs-on: ubuntu-latest
@@ -41,10 +37,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
-      # Beide stappen mogen niet rood worden als een bron onbereikbaar is: dat is
-      # de uitkomst van de meting, niet een fout in de workflow. De sonde geeft
-      # exit 1 als er geen enkele bron te bereiken is, en dat vangen we hier af
-      # zodat het artefact altijd wordt opgeslagen.
       - name: welke bronnen zijn bereikbaar
         run: |
           FLAG=""
@@ -88,9 +80,11 @@ jobs:
         run: bash scripts/bootstrap.sh
       - name: gemeentegrenzen ophalen en inladen
         run: python -m terra.fetch.load_lau "${{ inputs.lau_url }}"
-      - - name: neerslag per gemeente uit het raster
+      - name: neerslag per gemeente uit het raster
         if: inputs.rain_url != ''
         run: python -m terra.fetch.load_climate "${{ inputs.rain_url }}"
+      # Na de ophalers en voor de beoordeling. Handmatige leveringen verwijzen naar
+      # gemeenten op naam, dus ze kunnen pas landen als de gemeentelaag er staat.
       - name: handmatige leveringen innemen
         run: python -m terra.manual
       - name: gemeentelaag opnieuw beoordelen
@@ -107,8 +101,6 @@ jobs:
           commit-message: "Gemeentelaag ingeladen en site/data.json herberekend"
           body: |
             Automatisch gegenereerd door de workflow `data`, handmatig gestart.
-
             Kijk in de diff van `site/data.json` wat er veranderd is aan de
-            rijpheidspoort en aan de trechter voordat je dit samenvoegt. Dat is
-            het hele punt van een pull request in plaats van een push.
+            rijpheidspoort en aan de trechter voordat je dit samenvoegt.
           add-paths: site/data.json
