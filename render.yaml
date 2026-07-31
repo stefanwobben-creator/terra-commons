@@ -16,9 +16,14 @@ services:
     staticPublishPath: ./site
 
     # Verplicht veld, ook als er niets te bouwen valt: een lege string laat de
-    # deploy falen. Deze regel controleert meteen of data.json echt in de repo
-    # zit, want zonder dat bestand toont de site haar noodrantsoen.
-    buildCommand: test -f site/data.json && echo "data.json aanwezig, niets te bouwen"
+    # deploy falen.
+    #
+    # Hier stond eerst `test -f site/data.json && ...` als controle. Aardig
+    # bedacht, maar het maakte een mislukte deploy onleesbaar: "exited with
+    # status 1" en verder niets. Een controle die je niet kunt aflezen is geen
+    # controle. Nu draait er een ls, zodat de log laat zien wat er echt in de map
+    # staat, en dat is meer waard dan een stille afkeuring.
+    buildCommand: ls -la site && echo "statische site, niets te bouwen"
 
     previews:
       generation: automatic     # elke pull request krijgt een eigen URL
