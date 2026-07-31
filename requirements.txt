@@ -1,4 +1,10 @@
-psycopg[binary]==3.2.3
-rasterio==1.4.4
+# Bereiken in plaats van vastgespijkerde versies.
+#
+# psycopg[binary]==3.2.3 bestond niet voor de Python-versie die Render gebruikt
+# (pip bood daar 3.2.10 en hoger aan) en liet de deploy klappen. Een exacte pin
+# geeft schijnzekerheid: hij bevriest niet de werking maar de beschikbaarheid,
+# en die verschilt per Python-versie en per platform.
+psycopg[binary]>=3.2,<4
+rasterio>=1.4,<2
 numpy>=2.0
-pytest==8.3.4
+pytest>=8,<9

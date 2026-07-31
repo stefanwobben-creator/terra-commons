@@ -13,17 +13,25 @@ services:
   - type: web
     name: terra-commons
     runtime: static
-    staticPublishPath: ./site
+
+    # rootDir is hier het hele verhaal.
+    #
+    # Zonder deze regel kijkt Render naar de repo-wortel, ziet daar
+    # requirements.txt staan, concludeert "dit is een Python-project" en draait
+    # pip install voordat het aan de site toekomt. Drie deploys zijn daarop
+    # gestrand, met een foutmelding over psycopg die niets met de site te maken
+    # had. De statische site is de map site/ en verder niets; door dat expliciet
+    # te zeggen ziet Render de pijplijn helemaal niet meer staan.
+    #
+    # Bijvangst: de build duurt nu seconden in plaats van minuten, want er wordt
+    # geen rasterio meer gecompileerd voor een pagina die alleen HTML serveert.
+    rootDir: site
+    staticPublishPath: .
 
     # Verplicht veld, ook als er niets te bouwen valt: een lege string laat de
-    # deploy falen.
-    #
-    # Hier stond eerst `test -f site/data.json && ...` als controle. Aardig
-    # bedacht, maar het maakte een mislukte deploy onleesbaar: "exited with
-    # status 1" en verder niets. Een controle die je niet kunt aflezen is geen
-    # controle. Nu draait er een ls, zodat de log laat zien wat er echt in de map
-    # staat, en dat is meer waard dan een stille afkeuring.
-    buildCommand: ls -la site && echo "statische site, niets te bouwen"
+    # deploy falen. Een ls in plaats van een stille test, zodat de log laat zien
+    # wat er werkelijk in de map staat.
+    buildCommand: ls -la && echo "statische site, niets te bouwen"
 
     previews:
       generation: automatic     # elke pull request krijgt een eigen URL
