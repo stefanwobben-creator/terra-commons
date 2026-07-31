@@ -18,7 +18,8 @@ site/data.json       de gemeten cijfers, gegenereerd uit de database
 sql/                 schema (10 tabellen), views (7), en de herkomstconstraint
 terra/               de pijplijn: land -> regio -> gemeente -> perceel
 seed/                wat de site nu toont, als invoer voor de database
-tests/               26 tests, waarvan een de site tegen de database aanhoudt
+terra/fetch/         sonde en ophalers; de sonde eerst, dan pas downloaden
+tests/               33 tests, waarvan een de site tegen de database aanhoudt
 ```
 
 ## De drie ideeen waar de rest uit volgt
@@ -98,7 +99,7 @@ precies de bron die we niet mogen automatiseren. Daarom staat er nog geen cronjo
 ```bash
 export DATABASE_URL=postgresql://terra:terra@127.0.0.1:5432/terra
 bash scripts/bootstrap.sh     # schema, views, constraints, inname, export
-python -m pytest -q           # 26 tests
+python -m pytest -q           # 33 tests
 python -m http.server 8000 --directory site
 ```
 
@@ -129,14 +130,45 @@ die je dan kwijt bent is `observation`.
    kandidaten behandelde hem als uitsluiting.** Als scorepost zijn het er 24. Beide
    getallen worden gerapporteerd.
 
+## De gemeentelaag ophalen
+
+De volgende stap is de gemeentelaag, en die is **handmatig te starten zonder dat er
+iets automatisch gaat draaien**: GitHub, Actions, workflow `data`, Run workflow.
+
+1. **Laat het veld `lau_url` leeg.** De workflow draait dan alleen de sonde en
+   rapporteert welke bronadressen kloppen. Het artefact `probe` bevat het antwoord.
+   Dit is nodig omdat de adressen van GISCO, CHELSA en EFFIS niet geverifieerd zijn:
+   de omgeving waarin deze code geschreven is heeft geen uitgaand netwerk naar die
+   domeinen. Beter tien seconden sonderen dan een parser laten struikelen.
+2. **Vul daarna `lau_url` met het adres dat werkte.** De workflow haalt op, laadt in,
+   herberekent, draait de tests en opent een **pull request** met de nieuwe
+   `site/data.json`. Je ziet dus een diff voordat er iets live gaat.
+
+Waarom heel Spanje en niet een paar provincies: de automatiseerbare bronnen zijn
+bulkbestanden. Een LAU-bestand bevat alle 8.132 Spaanse gemeenten in een download,
+en zonal statistics over die polygonen is minuten rekenwerk. Beperken tot vier
+provincies bespaart niets. De trage bronnen (IBI-verordeningen, fiscale
+minimumwaarden per gewasklasse) zijn wel per gemeente, maar die haal je pas op voor
+de gemeenten die het klimaat- en brandfilter overleven.
+
+En waarom niet op provincie filteren: de provincie is in Spanje bijna nergens de
+bevoegde laag. De kaveleenheid, de fiscale minimumwaarde, het IBI-tarief en de
+aanwijzing als zone met hoog brandrisico staan per **gemeente**; het ITP-tarief en
+de dehesa-drempel per **autonome regio**. De provincie is vooral de eenheid waarin
+SIGPAC en het kadaster hun bestanden verpakken. Een downloadbestand, geen regel.
+Gemeten op de neerslagnormalen van Extremadura: de spreiding binnen een provincie is
+2,14x, die tussen de twee provincies 1,55x.
+
 ## Bekende gaten
 
 - `seed/parcels.json` is onvolledig: 7 van de 30 waarnemingen. Zie `seed/README.md`.
 - De gemeentelaag is leeg. `t2_municipality` logt zijn eigen leegte. Dit is de
   volgende stap, en ook de stap die de rijpheidspoort opent: de spreiding **binnen**
   een regio was groter dan die **tussen** regio's (2,51 tegen 2,02 voor neerslag).
-- Er is nog geen enkele fetcher. `terra.nightly` plant wel al correct wat aan de
-  beurt is, op basis van `source.next_due`.
+- De bronadressen in `terra/fetch/sources.py` zijn **niet geverifieerd**. Draai
+  eerst de sonde. Er zijn per bron meerdere kandidaten, juist daarom.
+- Alleen de gemeentegrenzen hebben een ophaler. Klimaat en brand volgen zodra de
+  sonde heeft gezegd welke adressen kloppen.
 
 ## Bronnen
 

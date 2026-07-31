@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-31T09:47:33+00:00",
+ "generated_at": "2026-07-31T10:21:40+00:00",
  "thresholds": {
   "rel": 80,
   "cmp": 100,
@@ -124,8 +124,8 @@
     "cost": "ver",
     "rain": "ver",
     "fire": "ind",
-    "cadastre": "ver",
-    "access": "ver"
+    "access": "ver",
+    "cadastre": "ver"
    },
    "values": {
     "price": {
@@ -144,13 +144,13 @@
      "num": 9000.0,
      "txt": "hele regio, indicatief"
     },
-    "cadastre": {
-     "num": null,
-     "txt": "Verouderd"
-    },
     "access": {
      "num": null,
      "txt": "good"
+    },
+    "cadastre": {
+     "num": null,
+     "txt": "Verouderd"
     }
    },
    "score": {

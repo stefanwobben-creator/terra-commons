@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"GISCO_ID": "ES_10148", "LAU_NAME": "x", "NUTS3_CODE": "ES431"}, "geometry": {"type": "Polygon", "coordinates": [[[-5.8, 40.0], [-5.7, 40.0], [-5.7, 40.1], [-5.8, 40.0]]]}}]}

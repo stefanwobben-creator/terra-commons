@@ -1,0 +1,94 @@
+name: data
+
+# Handmatig. Geen schema, geen cron.
+#
+# Dit is de knop waarmee je de gemeentelaag binnenhaalt zonder dat er iets
+# automatisch gaat draaien: Actions, "data", "Run workflow". De runner heeft wel
+# internet, deze repo hoeft niets lokaal geinstalleerd te hebben, en de uitkomst
+# is een pull request met een leesbare diff in plaats van een groen vinkje.
+#
+# Twee standen:
+#   1. Zonder lau_url  -> alleen de sonde. Rapporteert welke bronadressen kloppen.
+#   2. Met lau_url     -> haalt op, laadt in, herberekent, en opent een pull request.
+#
+# Zodra dit een paar keer goed is gegaan is er een regel voor nodig om het
+# wekelijks te laten lopen (`schedule:`). Niet eerder.
+
+on:
+  workflow_dispatch:
+    inputs:
+      lau_url:
+        description: "URL van het LAU-bestand. Leeg laten om alleen te sonderen."
+        required: false
+        default: ""
+      intent:
+        description: "Beheerintentie: dehesa of rewild"
+        required: false
+        default: "dehesa"
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: welke bronnen zijn bereikbaar
+        run: python -m terra.fetch.probe | tee probe.txt
+      - run: python -m terra.fetch.probe --json > probe.json
+        if: always()
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: probe
+          path: |
+            probe.txt
+            probe.json
+
+  load:
+    needs: probe
+    if: inputs.lau_url != ''
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_USER: terra
+          POSTGRES_PASSWORD: terra
+          POSTGRES_DB: terra
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 10s
+          --health-timeout 5s --health-retries 5
+    env:
+      DATABASE_URL: postgresql://terra:terra@localhost:5432/terra
+      TERRA_INTENT: ${{ inputs.intent }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -r requirements.txt
+      - run: sudo apt-get update && sudo apt-get install -y postgresql-client
+      - name: schema, views, constraints, seed
+        run: bash scripts/bootstrap.sh
+      - name: gemeentegrenzen ophalen en inladen
+        run: python -m terra.fetch.load_lau "${{ inputs.lau_url }}"
+      - name: herberekenen en exporteren
+        run: |
+          python -m terra.nightly
+          python -m terra.export
+      - name: tests, want de site mag niet uit de pas lopen
+        run: python -m pytest -q
+      - name: pull request openen
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: data/gemeentelaag
+          title: "Gemeentelaag bijgewerkt"
+          commit-message: "Gemeentelaag ingeladen en site/data.json herberekend"
+          body: |
+            Automatisch gegenereerd door de workflow `data`, handmatig gestart.
+
+            Kijk in de diff van `site/data.json` wat er veranderd is aan de
+            rijpheidspoort en aan de trechter voordat je dit samenvoegt. Dat is
+            het hele punt van een pull request in plaats van een push.
+          add-paths: site/data.json
