@@ -88,9 +88,11 @@ jobs:
         run: bash scripts/bootstrap.sh
       - name: gemeentegrenzen ophalen en inladen
         run: python -m terra.fetch.load_lau "${{ inputs.lau_url }}"
-      - name: neerslag per gemeente uit het raster
+      - - name: neerslag per gemeente uit het raster
         if: inputs.rain_url != ''
         run: python -m terra.fetch.load_climate "${{ inputs.rain_url }}"
+      - name: handmatige leveringen innemen
+        run: python -m terra.manual
       - name: gemeentelaag opnieuw beoordelen
         run: python -m terra.nightly
       - name: exporteren naar de site
