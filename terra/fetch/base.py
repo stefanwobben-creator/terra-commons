@@ -35,13 +35,17 @@ class Probe:
     bytes: int | None = None
     error: str | None = None
     seconds: float | None = None
+    peek: str | None = None
 
     def line(self) -> str:
         if not self.ok:
             return f"  FOUT   {self.url}\n         {self.error}"
         mb = f"{self.bytes/1e6:.1f} MB" if self.bytes else "onbekende grootte"
-        return (f"  OK     {self.url}\n"
-                f"         {self.status} · {self.content_type} · {mb} · {self.seconds:.1f}s")
+        out = (f"  OK     {self.url}\n"
+               f"         {self.status} · {self.content_type} · {mb} · {self.seconds:.1f}s")
+        if self.peek:
+            out += f"\n         begint met: {self.peek}"
+        return out
 
 
 def _request(url: str, method: str = "GET"):
@@ -49,15 +53,41 @@ def _request(url: str, method: str = "GET"):
                                   headers={"User-Agent": UA, "Accept-Encoding": "gzip"})
 
 
-def probe(url: str) -> Probe:
+PEEK_BYTES = 400
+
+
+def peek(url: str, n: int = PEEK_BYTES) -> str | None:
+    """De eerste paar honderd tekens van de inhoud.
+
+    Nodig gebleken na de eerste sonde: het EFFIS-endpoint gaf 200 met text/html en
+    nul bytes. "Bereikbaar" is niet hetzelfde als "bruikbaar", en het verschil zie
+    je pas als je in het antwoord kijkt. Een Range-verzoek, dus we halen geen
+    volledig bestand op om erachter te komen dat het een foutpagina is.
+    """
+    req = _request(url)
+    req.add_header("Range", f"bytes=0-{n - 1}")
+    try:
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+            raw = r.read(n)
+        if r.headers.get("Content-Encoding") == "gzip":
+            raw = gzip.decompress(raw)
+        txt = raw.decode("utf-8", "replace")
+        return " ".join(txt.split())[:n // 2] or "(leeg)"
+    except Exception as e:
+        return f"(niet te lezen: {type(e).__name__})"
+
+
+def probe(url: str, with_peek: bool = False) -> Probe:
     """Kijken zonder op te halen. HEAD, en bij weigering een GET van een paar bytes."""
     t0 = time.time()
     for method in ("HEAD", "GET"):
         try:
             with urllib.request.urlopen(_request(url, method), timeout=TIMEOUT) as r:
                 length = r.headers.get("Content-Length")
-                return Probe(url, True, r.status, r.headers.get("Content-Type"),
-                             int(length) if length else None, None, time.time() - t0)
+                ct = r.headers.get("Content-Type")
+                return Probe(url, True, r.status, ct, int(length) if length else None,
+                             None, time.time() - t0,
+                             peek(url) if with_peek else None)
         except urllib.error.HTTPError as e:
             if method == "HEAD" and e.code in (403, 405, 501):
                 continue                       # sommige servers weigeren HEAD

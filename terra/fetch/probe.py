@@ -1,6 +1,7 @@
 """Sonde. Draai dit eerst, waar netwerk is.
 
     python -m terra.fetch.probe            # leesbaar
+    python -m terra.fetch.probe --peek     # plus de eerste regels van de inhoud
     python -m terra.fetch.probe --json     # voor een workflow-artefact
 
 Wat eruit komt is de lijst met welke bronadressen kloppen. Daarna pas bouwen we
@@ -19,7 +20,7 @@ def main(argv: list[str] | None = None) -> int:
     argv = argv or sys.argv[1:]
     results, per_source = [], {}
     for s in ALL:
-        got = [probe(c.url) for c in s.candidates]
+        got = [probe(c.url, with_peek="--peek" in argv) for c in s.candidates]
         results += got
         per_source[s.id] = any(p.ok for p in got)
     if "--json" in argv:
