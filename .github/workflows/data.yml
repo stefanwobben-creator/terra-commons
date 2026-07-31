@@ -33,9 +33,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
+      # Beide stappen mogen niet rood worden als een bron onbereikbaar is: dat is
+      # de uitkomst van de meting, niet een fout in de workflow. De sonde geeft
+      # exit 1 als er geen enkele bron te bereiken is, en dat vangen we hier af
+      # zodat het artefact altijd wordt opgeslagen.
       - name: welke bronnen zijn bereikbaar
-        run: python -m terra.fetch.probe | tee probe.txt
-      - run: python -m terra.fetch.probe --json > probe.json
+        run: python -m terra.fetch.probe | tee probe.txt || true
+      - run: python -m terra.fetch.probe --json > probe.json || true
         if: always()
       - uses: actions/upload-artifact@v4
         if: always()
