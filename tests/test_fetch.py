@@ -27,7 +27,7 @@ def test_srid_wordt_uit_de_getallen_afgeleid():
 def test_alleen_gemeenten_in_onze_regios():
     parsed = lau.to_rows(lau.read(FIX / "lau_sample.geojson"))
     codes = sorted(r["code"] for r in parsed["rows"])
-    assert codes == ["ES_10148", "ES_49177"]
+    assert codes == ["TEST_CYL_1", "TEST_EXT_1"]
     assert {r["region_code"] for r in parsed["rows"]} == {"ext", "cyl"}
 
 
@@ -59,15 +59,23 @@ def test_sonde_geeft_een_leesbare_regel_bij_een_dood_adres():
 
 
 def test_gemeente_belandt_in_de_database_met_oppervlakte():
+    """Alleen over de eigen twee rijen, niet over de hele tabel.
+
+    Deze test faalde toen de echte gemeentelaag er eenmaal in zat: hij ging ervan
+    uit dat de tabel leeg was. Een test die aanneemt dat hij alleen op de wereld is,
+    werkt tot het moment dat het project begint te werken.
+    """
     try:
         with db.conn() as c:
             r = lau.load(c, FIX / "lau_sample.geojson")
             assert r["inserted"] == 2 and r["srid"] == 3035
             rows = db.q(c, """select code, region_code, round(area_ha) ha
-                              from municipality order by code""")
-            assert [x["code"] for x in rows] == ["ES_10148", "ES_49177"]
-            # 3 km bij 3 km is 900 ha, 4 bij 4 is 1.600 ha, in een gelijkoppervlakte-CRS
-            assert [int(x["ha"]) for x in rows] == [900, 1600]
+                              from municipality where code like 'TEST\\_%%'
+                              order by code""")
+            assert [x["code"] for x in rows] == ["TEST_CYL_1", "TEST_EXT_1"]
+            assert [x["region_code"] for x in rows] == ["cyl", "ext"]
+            # 4 km bij 4 km is 1.600 ha, 3 bij 3 is 900 ha, gelijkoppervlakte-CRS
+            assert [int(x["ha"]) for x in rows] == [1600, 900]
             c.rollback()
     except Exception as e:
         if "connection" in str(e).lower() or "connect" in str(e).lower():
