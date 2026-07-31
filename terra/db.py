@@ -7,8 +7,25 @@ import json
 from contextlib import contextmanager
 from typing import Any, Iterable, Sequence
 
-import psycopg
-from psycopg.rows import dict_row
+try:
+    import psycopg
+    from psycopg.rows import dict_row
+except ModuleNotFoundError as e:  # pragma: no cover
+    # Een kale ModuleNotFoundError laat iemand denken dat de repo stuk is, terwijl
+    # het antwoord meestal is: je hoeft dit lokaal helemaal niet te draaien. De
+    # keten draait in GitHub Actions, met een database die daar wordt opgezet.
+    raise ModuleNotFoundError(
+        "psycopg ontbreekt, dus deze module kan geen database benaderen.\n"
+        "\n"
+        "Grote kans dat je dit lokaal niet hoeft te draaien: alles wat een database\n"
+        "nodig heeft (inname, nightly, export) draait in de workflow 'data' op\n"
+        "GitHub, en die zet zijn eigen PostgreSQL met PostGIS op. Pushen is genoeg.\n"
+        "\n"
+        "Wil je het toch lokaal, dan heb je twee dingen nodig en niet een:\n"
+        "  1. pip install -r requirements.txt\n"
+        "  2. een draaiende PostgreSQL 16 met PostGIS 3.4, plus scripts/bootstrap.sh\n"
+        "Zonder dat tweede loopt hij een stap verderop alsnog vast op de verbinding.\n"
+    ) from e
 
 from .config import DSN
 
