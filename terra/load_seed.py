@@ -24,7 +24,11 @@ OBSERVED = date(2026, 7, 30)   # de dag waarop deze waarden op de site stonden
 VAR_SOURCE = {
     "price_eur_ha": ("eurostat-lprc", "EUR/ha"),
     "cost_pct": ("legal-country", "%"),
-    "rain_mm": ("chelsa-climate", "mm/jaar"),
+    # Stationsnormalen, geen raster. Ze stonden hier ten onrechte als CHELSA, en
+    # daarmee was de raster-afgeleide regiowaarde niet te onderscheiden van de
+    # handmatige. Een bronvermelding die twee verschillende dingen dekt is geen
+    # bronvermelding.
+    "rain_mm": ("station-normals", "mm/jaar"),
     "burned_ha": ("effis-fires", "ha"),
     "cadastre_class": ("catastro-inspire", None),
     "buyer_access": ("legal-country", None),

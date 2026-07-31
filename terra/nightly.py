@@ -16,7 +16,7 @@ from __future__ import annotations
 import json
 from datetime import date, timedelta
 
-from . import db
+from . import aggregate, db
 from .config import THRESHOLDS
 from .tiers import t0_country, t1_region, t2_municipality, t3_parcel
 
@@ -59,6 +59,11 @@ def main(intent: str = "dehesa", today: date | None = None) -> dict:
             out["t0_country"] = t0_country.run(c, run.id); c.commit()
             out["t1_region"] = t1_region.run(c, run.id); c.commit()
             out["t2_municipality"] = t2_municipality.run(c, run.id, intent); c.commit()
+            # Regiowaarden afleiden uit de gemeentelaag: geen download, een query.
+            out["regio_neerslag"] = [
+                {"regio": r["subject_id"], "mm": float(r["value_num"])}
+                for r in aggregate.region_rain(c)]
+            c.commit()
             out["t3_parcel"] = t3_parcel.run(c, run.id, intent); c.commit()
             out["quarantine_dry_run"] = t3_parcel.dry_run_quarantine(c, intent)
             run.stats = {k: v for k, v in out.items() if k.startswith("t")}

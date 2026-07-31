@@ -19,7 +19,8 @@ sql/                 schema (10 tabellen), views (7), en de herkomstconstraint
 terra/               de pijplijn: land -> regio -> gemeente -> perceel
 seed/                wat de site nu toont, als invoer voor de database
 terra/fetch/         sonde en ophalers; de sonde eerst, dan pas downloaden
-tests/               40 tests, waarvan een de site tegen de database aanhoudt
+terra/aggregate.py   regiowaarden afleiden uit de gemeentelaag; geen download
+tests/               48 tests, waarvan een de site tegen de database aanhoudt
 ```
 
 ## De drie ideeen waar de rest uit volgt
@@ -81,7 +82,7 @@ selecteren zodra de rijpheidspoort opengaat.
 
 ## De eerlijke grens van "automatisch"
 
-Zeventien bronnen, tien automatiseerbaar, zeven niet. Van de drie echte poorten:
+Achttien bronnen, tien automatiseerbaar, acht niet. Van de drie echte poorten:
 
 | Poort | Wat het toetst | Automatisch |
 |---|---|---|
@@ -89,7 +90,7 @@ Zeventien bronnen, tien automatiseerbaar, zeven niet. Van de drie echte poorten:
 | K6 | via pecuaria over het perceel | ja, uit de MITECO-laag |
 | K5 | inschrijving in het eigendomsregister | **nee**, nota simple per perceel |
 
-En de cadans van die zeventien: 3 eenmalig, 8 jaarlijks, 1 per seizoen, 5 op afroep.
+En de cadans van die achttien: 3 eenmalig, 8 jaarlijks, 1 per seizoen, 6 op afroep.
 **Nul dagelijks.** Wat wel dagelijks verandert is het aanbod op de portals, en dat is
 precies de bron die we niet mogen automatiseren. Daarom staat er nog geen cronjob in
 `render.yaml`. Zie `render.phase2.yaml`.
@@ -99,7 +100,7 @@ precies de bron die we niet mogen automatiseren. Daarom staat er nog geen cronjo
 ```bash
 export DATABASE_URL=postgresql://terra:terra@127.0.0.1:5432/terra
 bash scripts/bootstrap.sh     # schema, views, constraints, inname, export
-python -m pytest -q           # 40 tests
+python -m pytest -q           # 48 tests
 python -m http.server 8000 --directory site
 ```
 

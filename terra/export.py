@@ -23,6 +23,7 @@ from .config import THRESHOLDS
 from .load_seed import VAR_MAP
 from .registry import BY_ID, summary
 from .scoring import weight_audit
+from . import aggregate
 from .tiers import t1_region, t3_parcel
 
 OUT = Path(__file__).resolve().parent.parent / "site" / "data.json"
@@ -79,6 +80,11 @@ def build(c, generated_at: str | None = None) -> dict:
              "tier": r["tier"], "cadence": r["cadence"], "overdue": r["overdue"]}
             for r in db.q(c, "select * from v_manual_debt")]
 
+    # De database van de workflow is een wegwerpmachine: zodra de taak klaar is
+    # bestaat hij niet meer. Wat hier niet in komt, is weg. Daarom gaan de
+    # gemeentewaarden mee en niet alleen de tellingen erover.
+    gemeenten = aggregate.municipality_rain(c)
+
     return {
         "generated_at": generated_at or datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "thresholds": dict(zip(("rel", "cmp", "cov"), THRESHOLDS)),
@@ -91,6 +97,8 @@ def build(c, generated_at: str | None = None) -> dict:
         "sources": summary(),
         "manual_debt": debt,
         "weight_audit": weight_audit(),
+        "municipalities": gemeenten,
+        "rain_thresholds": [dict(r) for r in aggregate.rain_thresholds(c)],
     }
 
 

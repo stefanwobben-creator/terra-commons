@@ -113,11 +113,12 @@ def municipalities_as_features(c, srid: int = 4326) -> list[dict]:
 
 OBS_SQL = """
 insert into observation (subject_type,subject_id,variable,value_num,unit,quality,
-                         comparable,source_id,observed_at,note)
+                         comparable,source_id,observed_at,note,derived)
 values ('municipality',%s,%s,%s,'mm/jaar','ver',true,'chelsa-climate',
-        current_date,%s)
+        current_date,%s,%s)
 on conflict (subject_type,subject_id,variable,observed_at) do update set
-  value_num=excluded.value_num, quality=excluded.quality, note=excluded.note
+  value_num=excluded.value_num, quality=excluded.quality, note=excluded.note,
+  derived=excluded.derived
 """
 
 
@@ -133,10 +134,13 @@ def write(c, samples: list[dict]) -> int:
         if not s.get("n"):
             continue
         note = (f"n={s['n']} cellen, spreiding {s.get('spread')}x binnen de gemeente")
-        rows.append((s["code"], "rain_mm", s["mean"], note))
+        # Alleen het gemiddelde is een meting; de vier andere zijn uitdrukkingen
+        # van diezelfde meting. Ze gaan mee als derived=true zodat ze wel
+        # beschikbaar zijn maar de rijpheidspoort niet opblazen.
+        rows.append((s["code"], "rain_mm", s["mean"], note, False))
         for key, var in (("min", "rain_mm_min"), ("max", "rain_mm_max"),
                          ("p10", "rain_mm_p10"), ("p90", "rain_mm_p90")):
-            rows.append((s["code"], var, s[key], None))
+            rows.append((s["code"], var, s[key], None, True))
     return db.many(c, OBS_SQL, rows)
 
 

@@ -35,6 +35,12 @@ SOURCES: tuple[Source, ...] = (
            licence="Eurostat open", covers=("price_eur_ha",)),
     Source("mapa-tierra", "MAPA encuesta de precios de la tierra", "region", "annual",
            True, url="https://www.mapa.gob.es", covers=("price_eur_ha_class",)),
+    Source("station-normals", "Stationsnormalen uit nationale weerdiensten", "region",
+           "on_demand", False, covers=("rain_mm",),
+           notes=("handmatig verzamelde normalen met verschillende referentieperioden "
+                  "(1981-2010 naast 1991-2020 naast een reeks 2014-2026). Dit is de bron "
+                  "die neerslag onvergelijkbaar maakt, en hij hoorde niet onder de vlag "
+                  "van CHELSA te staan")),
     Source("chelsa-climate", "CHELSA V2 klimaatraster 1 km", "region", "once", True,
            url="https://chelsa-climate.org", licence="CC BY 4.0",
            covers=("rain_mm", "tmax_summer", "frost_days"),
