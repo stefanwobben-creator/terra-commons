@@ -1,0 +1,9 @@
+[
+ { "m": "Pasarón de la Vera",   "r": "ext", "ha": 154,  "p": 540000,  "src": "AgroAnuncios" },
+ { "m": "Llerena",             "r": "ext", "ha": 240,  "p": 960000,  "src": "AgroAnuncios" },
+ { "m": "Peñalsordo",          "r": "ext", "ha": 667,  "p": 2700000, "src": "AgroAnuncios" },
+ { "m": "Valdelacasa de Tajo", "r": "ext", "ha": 115,  "p": 513000,  "src": "AgroAnuncios" },
+ { "m": "Mesas de Ibor",       "r": "ext", "ha": 36.6, "p": 175200,  "src": "AgroAnuncios" },
+ { "m": "Trujillo",            "r": "ext", "ha": 315,  "p": 1550000, "src": "Cocampo" },
+ { "m": "Valdelacasa de Tajo", "r": "ext", "ha": 45,   "p": 225000,  "src": "AgroAnuncios" }
+]

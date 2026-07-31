@@ -1,0 +1,74 @@
+[
+ {
+  "k": "price",
+  "nm": {
+   "nl": "Prijs",
+   "en": "Price"
+  },
+  "cmp": false,
+  "why": {
+   "nl": "Drie meetmethoden door elkaar: transactie-enquête in Spanje, vraagprijzen op portals in Portugal, taxatiewaarden per hoogtezone in Italië, Eurostat in Roemenië en Bulgarije.",
+   "en": "Three measurement methods mixed: a transaction survey in Spain, portal asking prices in Portugal, valuation bands by elevation zone in Italy, Eurostat in Romania and Bulgaria."
+  }
+ },
+ {
+  "k": "cost",
+  "nm": {
+   "nl": "Kosten",
+   "en": "Cost"
+  },
+  "cmp": true,
+  "why": {
+   "nl": "Overal wettelijke tarieven plus notaris- en registerkosten, dus dezelfde grootheid.",
+   "en": "Statutory rates plus notary and registry fees everywhere, so the same quantity."
+  }
+ },
+ {
+  "k": "rain",
+  "nm": {
+   "nl": "Neerslag",
+   "en": "Rainfall"
+  },
+  "cmp": false,
+  "why": {
+   "nl": "Verschillende referentieperioden door elkaar: 1981 tot 2010 naast 1991 tot 2020, en voor Roemenië een reeks van 2014 tot 2026.",
+   "en": "Different reference periods mixed: 1981 to 2010 alongside 1991 to 2020, and for Romania a series from 2014 to 2026."
+  }
+ },
+ {
+  "k": "fire",
+  "nm": {
+   "nl": "Brand",
+   "en": "Fire"
+  },
+  "cmp": false,
+  "why": {
+   "nl": "Jaartotalen naast meerjarige gemiddelden, en verschillende noemers. Precies de fout die de rangschikking eerder verkeerd liet uitpakken.",
+   "en": "Annual totals alongside multi-year averages, and different denominators. Exactly the error that skewed the earlier ranking."
+  }
+ },
+ {
+  "k": "cadastre",
+  "nm": {
+   "nl": "Kadaster",
+   "en": "Cadastre"
+  },
+  "cmp": true,
+  "why": {
+   "nl": "Eigen classificatie in vijf klassen, consistent toegepast, maar wel een beoordeling en geen meting.",
+   "en": "Our own five-class classification, applied consistently, but a judgement rather than a measurement."
+  }
+ },
+ {
+  "k": "access",
+  "nm": {
+   "nl": "Koper",
+   "en": "Buyer"
+  },
+  "cmp": true,
+  "why": {
+   "nl": "Eigen classificatie in vier klassen op basis van wetteksten, consistent toegepast.",
+   "en": "Our own four-class classification based on legal texts, applied consistently."
+  }
+ }
+]

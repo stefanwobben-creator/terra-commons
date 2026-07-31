@@ -1,0 +1,38 @@
+# Fase 2: database en periodieke taak. NOG NIET AANZETTEN.
+#
+# Voorwaarde om dit te deployen: er is minstens een werkende fetcher in terra/,
+# zodat er 's nachts iets gebeurt wat overdag niet al gebeurd is. Tot die tijd
+# kost dit 7 dollar per maand om een lege trechter groen te laten afsluiten.
+#
+# Let op de cadans: geen enkele bron in het register verandert dagelijks
+# (3 eenmalig, 8 jaarlijks, 1 per seizoen, 5 op afroep). Daarom wekelijks en niet
+# nachtelijk. De planning zit in source.next_due, niet in deze cron-expressie:
+# de taak kijkt zelf wat er aan de beurt is en doet verder niets.
+#
+# Cron-expressies bij Render staan in UTC. 03:00 UTC is 05:00 in Madrid in de
+# zomer. Bewust niet 02:00 lokaal, want die tijd bestaat een nacht per jaar niet.
+
+databases:
+  - name: terra
+    databaseName: terra
+    user: terra
+    plan: basic-256mb           # 6 USD/mnd. De gratis variant verloopt na 30 dagen
+    postgresMajorVersion: "16"  # en heeft geen back-ups; niet voor de enige kopie
+
+services:
+  - type: cron
+    name: terra-weekly
+    runtime: python
+    plan: starter               # minimaal 1 USD/mnd per cronjob
+    schedule: "0 3 * * 1"       # maandag 03:00 UTC
+    buildCommand: pip install -r requirements.txt
+    startCommand: bash scripts/weekly.sh
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: terra
+          property: connectionString
+      - key: TERRA_INTENT
+        value: dehesa
+      - key: PYTHONUNBUFFERED
+        value: "1"

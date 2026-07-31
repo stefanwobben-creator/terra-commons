@@ -1,0 +1,26 @@
+# Fase 1: de statische site. Gratis, en dit is wat er deze week live kan.
+#
+# Bewust nog geen database en geen cronjob. Zie render.phase2.yaml en de README:
+# van de zeventien bronnen verandert er geen enkele dagelijks, en er is nog geen
+# fetcher geimplementeerd. Een nachtelijke taak zou nu negen taken starten die niet
+# bestaan en groen afsluiten. Dat vinkje is erger dan geen vinkje.
+#
+# De cijfers op de site komen uit site/data.json, geschreven door
+# `python -m terra.export` en meegecommit. De CI faalt als dat bestand niet meer
+# klopt met de database, dus een verouderde deploy kan niet ongemerkt langskomen.
+
+services:
+  - type: web
+    name: terra-commons
+    runtime: static
+    staticPublishPath: ./site
+    buildCommand: ""            # niets te bouwen: data.json staat in de repo
+    pullRequestPreviewsEnabled: true
+    headers:
+      - path: /data.json
+        name: Cache-Control
+        value: no-store         # anders toont een bezoeker oude cijfers na een deploy
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

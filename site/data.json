@@ -1,0 +1,658 @@
+{
+ "generated_at": "2026-07-31T09:47:33+00:00",
+ "thresholds": {
+  "rel": 80,
+  "cmp": 100,
+  "cov": 95
+ },
+ "readiness": {
+  "country": {
+   "cells": 5,
+   "present": 4,
+   "verified": 2,
+   "vars": 1,
+   "vars_comparable": 1,
+   "reliable_pct": 50,
+   "comparable_pct": 100,
+   "complete_pct": 80,
+   "gate_open": false
+  },
+  "region": {
+   "cells": 48,
+   "present": 39,
+   "verified": 24,
+   "vars": 6,
+   "vars_comparable": 3,
+   "reliable_pct": 62,
+   "comparable_pct": 50,
+   "complete_pct": 81,
+   "gate_open": false
+  }
+ },
+ "blocking_vars": [
+  {
+   "tier": "country",
+   "variable": "legal_gate_inputs",
+   "cells": 5,
+   "verified": 2,
+   "comparable": true,
+   "notes": "De combinatie sluit de poort: een Nederlandse stichting zonder vijf jaar geschiedenis ter plaatse valt buiten de gekwalificeerde kopers, en de heffing van 80 procent bij doorverkoop binnen acht jaar maakt een fout onherstelbaar. | Geen kwalificatie-eis voor EU-particulieren. Het BUPi-kadaster is nog in opbouw, wat een perceelrisico is en geen landpoort. | Ley 19/1995 art. 27: alleen retracto voor aangrenzende eigenaren onder tweemaal de kaveleenheid, geen tanteo, plus zes jaar doorverkoopverbod bij fiscaal begunstigde overdracht. Ley 1/1986 Extremadura nog geldend, de heffing uit art. 21 tot 27 is geschrapt door Ley 8/2002. | Openstaand. lex.bg gaf 403 en EUR-Lex is niet op te halen, dus de wettekst is niet gelezen. Zolang dit zo staat is Bulgarije niet afgewezen maar ongemeten. | Prelazione agraria voor pachter en aangrenzende beroepslandbouwer is een procesrisico bij de akte, geen verbod. Klimaat- en brandcijfers zijn hier niet ingewonnen, dus de regioscore blijft leeg."
+  },
+  {
+   "tier": "region",
+   "variable": "burned_ha",
+   "cells": 8,
+   "verified": 1,
+   "comparable": false,
+   "notes": "Jaartotalen naast meerjarige gemiddelden, en verschillende noemers. Precies de fout die de rangschikking eerder verkeerd liet uitpakken."
+  },
+  {
+   "tier": "region",
+   "variable": "buyer_access",
+   "cells": 8,
+   "verified": 4,
+   "comparable": true,
+   "notes": null
+  },
+  {
+   "tier": "region",
+   "variable": "cadastre_class",
+   "cells": 8,
+   "verified": 5,
+   "comparable": true,
+   "notes": null
+  },
+  {
+   "tier": "region",
+   "variable": "cost_pct",
+   "cells": 8,
+   "verified": 6,
+   "comparable": true,
+   "notes": null
+  },
+  {
+   "tier": "region",
+   "variable": "price_eur_ha",
+   "cells": 8,
+   "verified": 3,
+   "comparable": false,
+   "notes": "Drie meetmethoden door elkaar: transactie-enquête in Spanje, vraagprijzen op portals in Portugal, taxatiewaarden per hoogtezone in Italië, Eurostat in Roemenië en Bulgarije."
+  },
+  {
+   "tier": "region",
+   "variable": "rain_mm",
+   "cells": 8,
+   "verified": 5,
+   "comparable": false,
+   "notes": "Verschillende referentieperioden door elkaar: 1981 tot 2010 naast 1991 tot 2020, en voor Roemenië een reeks van 2014 tot 2026."
+  }
+ ],
+ "countries": {
+  "BG": {
+   "name": "Bulgarije",
+   "gate_open": null,
+   "gate_reason": "niet vastgesteld: buy_allowed, use_obligation"
+  },
+  "ES": {
+   "name": "Spanje",
+   "gate_open": true,
+   "gate_reason": null
+  },
+  "IT": {
+   "name": "Italie",
+   "gate_open": true,
+   "gate_reason": null
+  },
+  "PT": {
+   "name": "Portugal",
+   "gate_open": true,
+   "gate_reason": null
+  },
+  "RO": {
+   "name": "Roemenie",
+   "gate_open": false,
+   "gate_reason": "kwalificatie-eis: vijf jaar woonplaats, vijf jaar landbouwactiviteit en fiscale inschrijving in Roemenie (Legea 17/2014 zoals gewijzigd door Legea 175/2020); verplicht exclusief agrarisch gebruik, botst met passief herstel; heffing 80% bij doorverkoop binnen 8 jaar"
+  }
+ },
+ "regions": {
+  "ale": {
+   "name": "Alentejo",
+   "country": "PT",
+   "nuts2": "PT18",
+   "q": {
+    "price": "ind",
+    "cost": "ver",
+    "rain": "ver",
+    "fire": "ind",
+    "cadastre": "ver",
+    "access": "ver"
+   },
+   "values": {
+    "price": {
+     "num": 8150.0,
+     "txt": "5800-10500"
+    },
+    "cost": {
+     "num": 6.25,
+     "txt": "6,0–6,5%"
+    },
+    "rain": {
+     "num": 642.5,
+     "txt": "447-838"
+    },
+    "fire": {
+     "num": 9000.0,
+     "txt": "hele regio, indicatief"
+    },
+    "cadastre": {
+     "num": null,
+     "txt": "Verouderd"
+    },
+    "access": {
+     "num": null,
+     "txt": "good"
+    }
+   },
+   "score": {
+    "A": 8,
+    "E": 16,
+    "F": 12,
+    "G": 20
+   },
+   "status": "promoted",
+   "reasons": [
+    "56% van het maximum",
+    "rangschikking, geen selectie: rijpheidspoort dicht"
+   ]
+  },
+  "bei": {
+   "name": "Beira Interior",
+   "country": "PT",
+   "nuts2": "PT16",
+   "q": {
+    "access": "ver",
+    "price": "ind",
+    "cost": "ver",
+    "rain": "ver",
+    "fire": "ver",
+    "cadastre": "ver"
+   },
+   "values": {
+    "access": {
+     "num": null,
+     "txt": "good"
+    },
+    "price": {
+     "num": 4750.0,
+     "txt": "3100-6400"
+    },
+    "cost": {
+     "num": 6.9,
+     "txt": "6,3–7,5%"
+    },
+    "rain": {
+     "num": 1154.5,
+     "txt": "744-1565"
+    },
+    "fire": {
+     "num": 83790.0,
+     "txt": "district Guarda, 31% van heel Portugal"
+    },
+    "cadastre": {
+     "num": null,
+     "txt": "Ontbreekt"
+    }
+   },
+   "score": {
+    "A": 22,
+    "E": 17,
+    "F": 6,
+    "G": 8
+   },
+   "status": "promoted",
+   "reasons": [
+    "53% van het maximum",
+    "rangschikking, geen selectie: rijpheidspoort dicht"
+   ]
+  },
+  "bul": {
+   "name": "Bulgarije",
+   "country": "BG",
+   "nuts2": null,
+   "q": {
+    "price": "ver",
+    "cost": "mis",
+    "rain": "mis",
+    "fire": "mis",
+    "cadastre": "mis",
+    "access": "mis"
+   },
+   "values": {
+    "price": {
+     "num": 1492.0,
+     "txt": "1012-1972"
+    },
+    "cost": {
+     "num": null,
+     "txt": null
+    },
+    "rain": {
+     "num": null,
+     "txt": null
+    },
+    "fire": {
+     "num": null,
+     "txt": null
+    },
+    "cadastre": {
+     "num": null,
+     "txt": null
+    },
+    "access": {
+     "num": null,
+     "txt": null
+    }
+   },
+   "score": {
+    "A": null,
+    "E": null,
+    "F": null,
+    "G": null
+   },
+   "status": "pending",
+   "reasons": [
+    "landpoort niet vastgesteld"
+   ]
+  },
+  "cyl": {
+   "name": "Castilla y León",
+   "country": "ES",
+   "nuts2": "ES41",
+   "q": {
+    "cost": "ver",
+    "price": "ind",
+    "rain": "ver",
+    "fire": "ind",
+    "cadastre": "ver",
+    "access": "ver"
+   },
+   "values": {
+    "cost": {
+     "num": 9.75,
+     "txt": "9–10,5%"
+    },
+    "price": {
+     "num": 2325.0,
+     "txt": "750-3900"
+    },
+    "rain": {
+     "num": 924.5,
+     "txt": "379-1470"
+    },
+    "fire": {
+     "num": 138538.0,
+     "txt": "7× het tienjaargemiddelde"
+    },
+    "cadastre": {
+     "num": null,
+     "txt": "Goed"
+    },
+    "access": {
+     "num": null,
+     "txt": "good"
+    }
+   },
+   "score": {
+    "A": 15,
+    "E": 14,
+    "F": 23,
+    "G": 22
+   },
+   "status": "promoted",
+   "reasons": [
+    "74% van het maximum",
+    "rangschikking, geen selectie: rijpheidspoort dicht"
+   ]
+  },
+  "ext": {
+   "name": "Extremadura",
+   "country": "ES",
+   "nuts2": "ES43",
+   "q": {
+    "cost": "ver",
+    "cadastre": "ver",
+    "price": "ind",
+    "rain": "ver",
+    "fire": "ind",
+    "access": "ver"
+   },
+   "values": {
+    "cost": {
+     "num": 9.5,
+     "txt": "9–10%"
+    },
+    "cadastre": {
+     "num": null,
+     "txt": "Goed"
+    },
+    "price": {
+     "num": 4250.0,
+     "txt": "3500-5000"
+    },
+    "rain": {
+     "num": 864.0,
+     "txt": "428-1300"
+    },
+    "fire": {
+     "num": 10863.0,
+     "txt": "brandvlakte 2023"
+    },
+    "access": {
+     "num": null,
+     "txt": "good"
+    }
+   },
+   "score": {
+    "A": 20,
+    "E": 18,
+    "F": 21,
+    "G": null
+   },
+   "status": "pending",
+   "reasons": [
+    "component G niet gemeten, score 59 van 75 gemeten punten"
+   ]
+  },
+  "gal": {
+   "name": "Galicië",
+   "country": "ES",
+   "nuts2": "ES11",
+   "q": {
+    "price": "ind",
+    "cost": "ver",
+    "rain": "ver",
+    "fire": "ind",
+    "cadastre": "ver",
+    "access": "ind"
+   },
+   "values": {
+    "price": {
+     "num": 1750.0,
+     "txt": "500-3000"
+    },
+    "cost": {
+     "num": 2.5,
+     "txt": "~2–3%"
+    },
+    "rain": {
+     "num": 1301.0,
+     "txt": "811-1791"
+    },
+    "fire": {
+     "num": 120000.0,
+     "txt": "augustus 2025, zwaarste golf van de eeuw"
+    },
+    "cadastre": {
+     "num": null,
+     "txt": "Onbruikbaar"
+    },
+    "access": {
+     "num": null,
+     "txt": "warn"
+    }
+   },
+   "score": {
+    "A": 25,
+    "E": 15,
+    "F": 4,
+    "G": 6
+   },
+   "status": "promoted",
+   "reasons": [
+    "50% van het maximum",
+    "rangschikking, geen selectie: rijpheidspoort dicht"
+   ]
+  },
+  "ita": {
+   "name": "Italië binnenland",
+   "country": "IT",
+   "nuts2": null,
+   "q": {
+    "price": "ver",
+    "cost": "ver",
+    "rain": "mis",
+    "fire": "mis",
+    "cadastre": "ind",
+    "access": "ind"
+   },
+   "values": {
+    "price": {
+     "num": 4900.0,
+     "txt": "4800-5000"
+    },
+    "cost": {
+     "num": 16.5,
+     "txt": "15–18%"
+    },
+    "rain": {
+     "num": null,
+     "txt": null
+    },
+    "fire": {
+     "num": null,
+     "txt": null
+    },
+    "cadastre": {
+     "num": null,
+     "txt": "Zwak"
+    },
+    "access": {
+     "num": null,
+     "txt": "good"
+    }
+   },
+   "score": {
+    "A": null,
+    "E": null,
+    "F": 9,
+    "G": null
+   },
+   "status": "pending",
+   "reasons": [
+    "component A, E, G niet gemeten, score 9 van 25 gemeten punten"
+   ]
+  },
+  "rom": {
+   "name": "Roemenië",
+   "country": "RO",
+   "nuts2": null,
+   "q": {
+    "price": "ver",
+    "cost": "mis",
+    "rain": "ind",
+    "fire": "mis",
+    "cadastre": "ind",
+    "access": "ind"
+   },
+   "values": {
+    "price": {
+     "num": 1967.0,
+     "txt": "1967-1967"
+    },
+    "cost": {
+     "num": null,
+     "txt": null
+    },
+    "rain": {
+     "num": 765.5,
+     "txt": "521-1010"
+    },
+    "fire": {
+     "num": null,
+     "txt": null
+    },
+    "cadastre": {
+     "num": null,
+     "txt": "Incompleet"
+    },
+    "access": {
+     "num": null,
+     "txt": "crit"
+    }
+   },
+   "score": {
+    "A": 24,
+    "E": 6,
+    "F": 2,
+    "G": null
+   },
+   "status": "rejected",
+   "reasons": [
+    "landpoort dicht: kwalificatie-eis: vijf jaar woonplaats, vijf jaar landbouwactiviteit en fiscale inschrijving in Roemenie (Legea 17/2014 zoals gewijzigd door Legea 175/2020); verplicht exclusief agrarisch gebruik, botst met passief herstel; heffing 80% bij doorverkoop binnen 8 jaar"
+   ]
+  }
+ },
+ "funnel": {
+  "country": {
+   "pending": 1,
+   "promoted": 3,
+   "rejected": 1
+  },
+  "region": {
+   "pending": 3,
+   "promoted": 4,
+   "rejected": 1
+  }
+ },
+ "quarantine": {
+  "by_region": [
+   {
+    "region_code": "ext",
+    "n": 7,
+    "profile_fit": 2,
+    "over_100ha": 5,
+    "median_eur_ha": 4461.0,
+    "reason": "geen listing_url en geen kijkdatum"
+   }
+  ],
+  "dehesa": {
+   "n": 7,
+   "profile": {
+    "large": 5,
+    "fit": 2
+   },
+   "flags": {
+    "K2": 5,
+    "K8": 1
+   },
+   "candidates_window": 6,
+   "candidates_min_only": 7,
+   "window": [
+    16,
+    400.0
+   ],
+   "ha_in_window": 906,
+   "note": "dit zijn geen besluiten; deze advertenties zijn niet na te lopen zonder URL en kijkdatum. Het verschil tussen de twee tellingen is de open vraag of K8 uitsluit of alleen kost."
+  },
+  "rewild": {
+   "n": 7,
+   "profile": {
+    "large": 5,
+    "fit": 2
+   },
+   "flags": {
+    "K2": 5,
+    "K8": 1
+   },
+   "candidates_window": 2,
+   "candidates_min_only": 7,
+   "window": [
+    16,
+    100.0
+   ],
+   "ha_in_window": 82,
+   "note": "dit zijn geen besluiten; deze advertenties zijn niet na te lopen zonder URL en kijkdatum. Het verschil tussen de twee tellingen is de open vraag of K8 uitsluit of alleen kost."
+  },
+  "n": 7,
+  "complete": false
+ },
+ "sources": {
+  "sources": 17,
+  "automatable": 10,
+  "manual": 7,
+  "per_tier": {
+   "country": 1,
+   "region": 4,
+   "municipality": 6,
+   "parcel": 6
+  },
+  "per_cadence": {
+   "once": 3,
+   "annual": 8,
+   "seasonal": 1,
+   "on_demand": 5
+  },
+  "gates_automatable": {
+   "K4": true,
+   "K5": false,
+   "K6": true
+  }
+ },
+ "manual_debt": [
+  {
+   "id": "legal-country",
+   "name": "Wetteksten per land (BOE, DRE, Monitorul, DV)",
+   "tier": "country",
+   "cadence": "once",
+   "overdue": true
+  },
+  {
+   "id": "ex-fiscal-values",
+   "name": "Valores fiscales minimos Extremadura",
+   "tier": "municipality",
+   "cadence": "on_demand",
+   "overdue": true
+  },
+  {
+   "id": "umc-decreto-46-1997",
+   "name": "Unidad minima de cultivo, Decreto 46/1997",
+   "tier": "municipality",
+   "cadence": "once",
+   "overdue": true
+  },
+  {
+   "id": "zar-fire-zones",
+   "name": "Zonas de Alto Riesgo de incendio",
+   "tier": "municipality",
+   "cadence": "on_demand",
+   "overdue": true
+  },
+  {
+   "id": "ibi-ordenanzas",
+   "name": "Gemeentelijke IBI-verordeningen",
+   "tier": "municipality",
+   "cadence": "annual",
+   "overdue": true
+  },
+  {
+   "id": "registro-propiedad",
+   "name": "Nota simple, Registro de la Propiedad",
+   "tier": "parcel",
+   "cadence": "on_demand",
+   "overdue": true
+  },
+  {
+   "id": "listings",
+   "name": "Advertenties op portals",
+   "tier": "parcel",
+   "cadence": "on_demand",
+   "overdue": true
+  }
+ ],
+ "weight_audit": {
+  "sum": 135,
+  "documented": 100,
+  "delta": 35,
+  "consistent": false
+ }
+}

@@ -1,0 +1,74 @@
+[
+ {
+  "k": "K1",
+  "cat": "cond",
+  "nm": { "nl": "Neerslag onder 500 mm", "en": "Rainfall below 500 mm" },
+  "w": {
+   "nl": "Eigenschap van de locatie, maar de drempel hangt af van het doelecosysteem: een dehesa kan op 450 mm, Atlantisch loofbos niet op 700.",
+   "en": "A property of the location, but the threshold depends on the target ecosystem: a dehesa manages at 450 mm, Atlantic broadleaf forest does not at 700."
+  }
+ },
+ {
+  "k": "K2",
+  "cat": "cond",
+  "nm": { "nl": "Boven 100 ha beweidbaar", "en": "Above 100 ha grazeable" },
+  "w": {
+   "nl": "Een keuze. Bindt alleen bij strikt niet-ingrijpen; met beweiding of kurkoogst is de wettelijke drempel haalbaar.",
+   "en": "A choice. Only binding under strict non-intervention; with grazing or cork harvest the statutory threshold is reachable."
+  }
+ },
+ {
+  "k": "K3",
+  "cat": "score",
+  "nm": { "nl": "Onder tweemaal de kaveleenheid", "en": "Below twice the minimum cultivation unit" },
+  "w": {
+   "nl": "Een risico met een einddatum: een jaar terugkooprecht van aangrenzende eigenaren. Ondeelbaarheid is voor een natuurproject geen bezwaar.",
+   "en": "A risk with an end date: one year of repurchase rights for adjoining owners. Indivisibility is no obstacle for a restoration project."
+  }
+ },
+ {
+  "k": "K4",
+  "cat": "gate",
+  "nm": { "nl": "Geen verzekerde toegang", "en": "No assured access" },
+  "w": {
+   "nl": "Eigenschap van het perceel. Een ingesloten finca zonder wettelijke uitweg is onbruikbaar, ongeacht budget.",
+   "en": "A property of the parcel. An enclosed finca without a legal right of way is unusable, whatever the budget."
+  }
+ },
+ {
+  "k": "K5",
+  "cat": "gate",
+  "nm": { "nl": "Niet in het eigendomsregister", "en": "Not in the property register" },
+  "w": {
+   "nl": "Eigenschap van de titel. Herstelbaar via art. 203 of 205 Ley Hipotecaria, maar duur en met onzekere uitkomst.",
+   "en": "A property of the title. Repairable under art. 203 or 205 of the Mortgage Act, but costly and with an uncertain outcome."
+  }
+ },
+ {
+  "k": "K6",
+  "cat": "gate",
+  "nm": { "nl": "Via pecuaria eroverheen", "en": "Drove road crossing it" },
+  "w": {
+   "nl": "Eigenschap van het perceel. Publiek domein van de regio, onvervreemdbaar en onverjaarbaar, dus niet op te lossen.",
+   "en": "A property of the parcel. Regional public domain, inalienable and imprescriptible, so it cannot be resolved."
+  }
+ },
+ {
+  "k": "K7",
+  "cat": "cond",
+  "nm": { "nl": "Grondwatervoorraad en riesgo", "en": "Groundwater body at risk" },
+  "w": {
+   "nl": "Een keuze. Bindt alleen als het herstelplan van grondwater afhangt; met alleen regenwaterretentie niet.",
+   "en": "A choice. Only binding if the restoration plan depends on groundwater; not with rainwater retention alone."
+  }
+ },
+ {
+  "k": "K8",
+  "cat": "score",
+  "nm": { "nl": "Boven 400 ha, brandpreventieplan", "en": "Above 400 ha, fire prevention plan" },
+  "w": {
+   "nl": "Een kostenpost, geen verbod: een plan door een ingeniero de montes, met herziening elke vier jaar.",
+   "en": "A cost, not a ban: a plan drawn up by a forestry engineer, revised every four years."
+  }
+ }
+]

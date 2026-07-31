@@ -1,0 +1,350 @@
+[
+ {
+  "key": "ext",
+  "q": {
+   "price": "ind",
+   "cost": "ver",
+   "rain": "ver",
+   "fire": "ind",
+   "cadastre": "ver",
+   "access": "ver"
+  },
+  "rank": 1,
+  "short": true,
+  "name": {
+   "nl": "Extremadura",
+   "en": "Extremadura"
+  },
+  "geo": {
+   "nl": "Spanje · Cáceres en Badajoz",
+   "en": "Spain · Cáceres and Badajoz"
+  },
+  "priceMin": 3500,
+  "priceMax": 5000,
+  "priceNote": {
+   "nl": "pastizal €3.825 (officieel, 2024)",
+   "en": "pastizal €3,825 (official, 2024)"
+  },
+  "cost": "9–10%",
+  "costV": 9.5,
+  "rainMin": 428,
+  "rainMax": 1300,
+  "fire": 10863,
+  "fireNote": {
+   "nl": "brandvlakte 2023",
+   "en": "2023 burn scar"
+  },
+  "cadastre": {
+   "nl": "Goed",
+   "en": "Good"
+  },
+  "access": "good",
+  "verdict": {
+   "nl": "Het snelst te verwerven: een aaneengesloten, ingeschreven blok van 25 tot 90 hectare in één transactie, en het diepst onderzocht. De eerste plaats is voorlopig, zie het kader hierboven.",
+   "en": "Fastest to acquire: a contiguous, registered block of 25 to 90 hectares in a single transaction, and the most deeply researched. First place is provisional, see the box above."
+  }
+ },
+ {
+  "key": "cyl",
+  "q": {
+   "price": "ind",
+   "cost": "ver",
+   "rain": "ver",
+   "fire": "ind",
+   "cadastre": "ver",
+   "access": "ver"
+  },
+  "rank": 2,
+  "short": true,
+  "name": {
+   "nl": "Castilla y León",
+   "en": "Castilla y León"
+  },
+  "geo": {
+   "nl": "Spanje · natte randgebergten",
+   "en": "Spain · wet border ranges"
+  },
+  "priceMin": 750,
+  "priceMax": 3900,
+  "priceNote": {
+   "nl": "pastizal €1.890 (officieel, 2024)",
+   "en": "pastizal €1,890 (official, 2024)"
+  },
+  "cost": "9–10,5%",
+  "costV": 9.75,
+  "rainMin": 379,
+  "rainMax": 1470,
+  "fire": 138538,
+  "fireNote": {
+   "nl": "7× het tienjaargemiddelde",
+   "en": "7× the ten-year average"
+  },
+  "cadastre": {
+   "nl": "Goed",
+   "en": "Good"
+  },
+  "access": "good",
+  "verdict": {
+   "nl": "De helft van de prijs van Extremadura en hetzelfde rechtskader, dus het model verhuist bijna ongewijzigd.",
+   "en": "Half the price of Extremadura under the same legal framework, so the model transfers almost unchanged."
+  }
+ },
+ {
+  "key": "bei",
+  "q": {
+   "price": "ind",
+   "cost": "ver",
+   "rain": "ver",
+   "fire": "ver",
+   "cadastre": "ver",
+   "access": "ver"
+  },
+  "rank": 3,
+  "short": true,
+  "name": {
+   "nl": "Beira Interior",
+   "en": "Beira Interior"
+  },
+  "geo": {
+   "nl": "Portugal · Côa-vallei en Serra da Estrela",
+   "en": "Portugal · Côa valley and Serra da Estrela"
+  },
+  "priceMin": 3100,
+  "priceMax": 6400,
+  "priceNote": {
+   "nl": "vraagprijzen portals, juli 2026",
+   "en": "portal asking prices, July 2026"
+  },
+  "cost": "6,3–7,5%",
+  "costV": 6.9,
+  "rainMin": 744,
+  "rainMax": 1565,
+  "fire": 83790,
+  "fireNote": {
+   "nl": "district Guarda, 31% van heel Portugal",
+   "en": "Guarda district, 31% of all Portugal"
+  },
+  "cadastre": {
+   "nl": "Ontbreekt",
+   "en": "Absent"
+  },
+  "access": "good",
+  "verdict": {
+   "nl": "Het hoogste ecologische plafond en een bestaand rewildingnetwerk van 120.000 hectare, maar geen kadaster.",
+   "en": "The highest ecological ceiling and an existing 120,000-hectare rewilding network, but no cadastre."
+  }
+ },
+ {
+  "key": "gal",
+  "q": {
+   "price": "ind",
+   "cost": "ver",
+   "rain": "ver",
+   "fire": "ind",
+   "cadastre": "ver",
+   "access": "ind"
+  },
+  "rank": 4,
+  "short": false,
+  "name": {
+   "nl": "Galicië",
+   "en": "Galicia"
+  },
+  "geo": {
+   "nl": "Spanje · Ourense en oost-Lugo",
+   "en": "Spain · Ourense and eastern Lugo"
+  },
+  "priceMin": 500,
+  "priceMax": 3000,
+  "priceNote": {
+   "nl": "matorral, taxatiebandbreedte 2026",
+   "en": "matorral, 2026 valuation range"
+  },
+  "cost": "~2–3%",
+  "costV": 2.5,
+  "rainMin": 811,
+  "rainMax": 1791,
+  "fire": 120000,
+  "fireNote": {
+   "nl": "augustus 2025, zwaarste golf van de eeuw",
+   "en": "August 2025, worst wave of the century"
+  },
+  "cadastre": {
+   "nl": "Onbruikbaar",
+   "en": "Unusable"
+  },
+  "access": "warn",
+  "verdict": {
+   "nl": "Snelste herstel van allemaal, maar 11 miljoen percelen van 0,26 hectare en een kwart van de regio is onverkoopbaar.",
+   "en": "Fastest recovery of all, but 11 million parcels of 0.26 hectares and a quarter of the region cannot be sold."
+  }
+ },
+ {
+  "key": "ale",
+  "q": {
+   "price": "ind",
+   "cost": "ver",
+   "rain": "ver",
+   "fire": "ind",
+   "cadastre": "ver",
+   "access": "ver"
+  },
+  "rank": 5,
+  "short": false,
+  "name": {
+   "nl": "Alentejo",
+   "en": "Alentejo"
+  },
+  "geo": {
+   "nl": "Portugal · montado",
+   "en": "Portugal · montado"
+  },
+  "priceMin": 5800,
+  "priceMax": 10500,
+  "priceNote": {
+   "nl": "vraagprijzen portals, juli 2026",
+   "en": "portal asking prices, July 2026"
+  },
+  "cost": "6,0–6,5%",
+  "costV": 6.25,
+  "rainMin": 447,
+  "rainMax": 838,
+  "fire": 9000,
+  "fireNote": {
+   "nl": "hele regio, indicatief",
+   "en": "whole region, indicative"
+  },
+  "cadastre": {
+   "nl": "Verouderd",
+   "en": "Outdated"
+  },
+  "access": "good",
+  "verdict": {
+   "nl": "Duurder en droger dan Extremadura. Alleen interessant in de twee zones met een resultaatgestuurde betaling.",
+   "en": "Pricier and drier than Extremadura. Only interesting in the two zones with a results-based payment."
+  }
+ },
+ {
+  "key": "rom",
+  "q": {
+   "price": "ver",
+   "cost": "mis",
+   "rain": "ind",
+   "fire": "mis",
+   "cadastre": "ind",
+   "access": "ind"
+  },
+  "rank": 6,
+  "short": false,
+  "name": {
+   "nl": "Roemenië",
+   "en": "Romania"
+  },
+  "geo": {
+   "nl": "Karpaten en Transsylvanië",
+   "en": "Carpathians and Transylvania"
+  },
+  "priceMin": 1967,
+  "priceMax": 1967,
+  "priceNote": {
+   "nl": "grasland, Eurostat 2024",
+   "en": "grassland, Eurostat 2024"
+  },
+  "cost": null,
+  "costV": null,
+  "rainMin": 521,
+  "rainMax": 1010,
+  "fire": null,
+  "fireNote": null,
+  "cadastre": {
+   "nl": "Incompleet",
+   "en": "Incomplete"
+  },
+  "access": "crit",
+  "verdict": {
+   "nl": "Fysiek de beste van allemaal: 602 mm met juli als natste maand. Maar de koper kwalificeert niet.",
+   "en": "Physically the best of all: 602 mm with July as the wettest month. But the buyer does not qualify."
+  }
+ },
+ {
+  "key": "ita",
+  "q": {
+   "price": "ver",
+   "cost": "ver",
+   "rain": "mis",
+   "fire": "mis",
+   "cadastre": "ind",
+   "access": "ind"
+  },
+  "rank": 7,
+  "short": false,
+  "name": {
+   "nl": "Italië binnenland",
+   "en": "Inland Italy"
+  },
+  "geo": {
+   "nl": "Basilicata en Sardinië",
+   "en": "Basilicata and Sardinia"
+  },
+  "priceMin": 4800,
+  "priceMax": 5000,
+  "priceNote": {
+   "nl": "berggebied, CREA 2024",
+   "en": "mountain zone, CREA 2024"
+  },
+  "cost": "15–18%",
+  "costV": 16.5,
+  "rainMin": null,
+  "rainMax": null,
+  "fire": null,
+  "fireNote": null,
+  "cadastre": {
+   "nl": "Zwak",
+   "en": "Weak"
+  },
+  "access": "good",
+  "verdict": {
+   "nl": "Valt af op kosten, niet op inhoud: 15 tot 18 procent transactiekosten voor een niet-agrarische koper.",
+   "en": "Fails on cost, not on merit: 15 to 18 percent transaction costs for a non-farming buyer."
+  }
+ },
+ {
+  "key": "bul",
+  "q": {
+   "price": "ver",
+   "cost": "mis",
+   "rain": "mis",
+   "fire": "mis",
+   "cadastre": "mis",
+   "access": "mis"
+  },
+  "rank": null,
+  "short": false,
+  "name": {
+   "nl": "Bulgarije",
+   "en": "Bulgaria"
+  },
+  "geo": {
+   "nl": "Rhodopen en Stara Planina",
+   "en": "Rhodopes and Stara Planina"
+  },
+  "priceMin": 1012,
+  "priceMax": 1972,
+  "priceNote": {
+   "nl": "grasland, Eurostat 2024",
+   "en": "grassland, Eurostat 2024"
+  },
+  "cost": null,
+  "costV": null,
+  "rainMin": null,
+  "rainMax": null,
+  "fire": null,
+  "fireNote": null,
+  "cadastre": null,
+  "access": "unk",
+  "verdict": {
+   "nl": "Niet af. Prijzen zijn vrijwel gelijk aan Roemenië, maar de juridische poort is niet onderzocht.",
+   "en": "Not finished. Prices are near-identical to Romania, but the legal gate was not researched."
+  }
+ }
+]

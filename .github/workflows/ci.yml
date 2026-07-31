@@ -1,0 +1,39 @@
+name: ci
+
+# Waarom de database in de CI zit: de belangrijkste test vergelijkt site/data.json
+# met wat de database op dit moment zou produceren. Zonder database slaat die test
+# zichzelf over, en dan kan de site stilletjes iets anders beweren dan de data.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_USER: terra
+          POSTGRES_PASSWORD: terra
+          POSTGRES_DB: terra
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 10s
+          --health-timeout 5s --health-retries 5
+    env:
+      DATABASE_URL: postgresql://terra:terra@localhost:5432/terra
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: schema en views laden
+        run: |
+          sudo apt-get update && sudo apt-get install -y postgresql-client
+          for f in sql/*.sql; do psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f "$f"; done
+      - name: tests
+        run: python -m pytest -q
