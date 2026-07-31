@@ -73,3 +73,23 @@ def test_gemeente_belandt_in_de_database_met_oppervlakte():
         if "connection" in str(e).lower() or "connect" in str(e).lower():
             pytest.skip(f"geen database: {e}")
         raise
+
+
+def test_regio_uit_de_gemeentecode_als_nuts_ontbreekt():
+    """Tweede weg naar dezelfde regio. Een INE-code is vijf cijfers waarvan de
+    eerste twee de provincie zijn, en provincies liggen vast binnen een regio."""
+    assert lau._region_from_code("ES_10148", "ES") == "ext"   # Caceres
+    assert lau._region_from_code("49177", "ES") == "cyl"      # Zamora
+    assert lau._region_from_code("ES_28079", "ES") is None    # Madrid, niet van ons
+    assert lau._region_from_code("FR_75056", "FR") is None
+
+
+def test_nul_herkende_gemeenten_levert_een_diagnose():
+    """Zonder dit is een mislukte run alleen 'nul gemeenten' en moet je zelf
+    123 MB gaan openen."""
+    vreemd = [{"properties": {"MUNI_CODE": "X", "MUNI_NAAM": "Y"},
+               "geometry": {"type": "Point", "coordinates": [0, 0]}}]
+    d = lau.to_rows(vreemd)
+    assert not d["rows"] and "diagnose" in d
+    assert d["diagnose"]["beschikbare_velden"] == ["MUNI_CODE", "MUNI_NAAM"]
+    assert "gezocht_naar" in d["diagnose"]

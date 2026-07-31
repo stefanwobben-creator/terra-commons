@@ -45,7 +45,8 @@ def main(argv: list[str] | None = None) -> int:
             c.commit()
     print(json.dumps(res, indent=1, ensure_ascii=False))
     if not res["inserted"]:
-        print("nul gemeenten ingeladen; kijk naar fields_used en skipped hierboven",
+        print("\nNUL GEMEENTEN INGELADEN. Hierboven staat onder 'diagnose' welke "
+              "velden het bestand wel heeft; daar hoort de mapping op aangepast.",
               file=sys.stderr)
         return 1
     return 0

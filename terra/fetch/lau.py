@@ -22,9 +22,20 @@ from .. import db
 REGION_BY_NUTS2 = {"ES43": "ext", "ES41": "cyl", "ES11": "gal",
                    "PT16": "bei", "PT18": "ale"}
 
+# Tweede weg naar dezelfde regio, voor als het bestand geen NUTS-veld heeft.
+# Een Spaanse gemeentecode van het INE is vijf cijfers waarvan de eerste twee de
+# provincie zijn, en provincies liggen vast binnen een autonome regio. Dat is geen
+# benadering maar een sluitende indeling.
+REGION_BY_ES_PROVINCE = {
+    "10": "ext", "06": "ext",                                        # Caceres, Badajoz
+    "05": "cyl", "09": "cyl", "24": "cyl", "34": "cyl", "37": "cyl",  # Avila .. Salamanca
+    "40": "cyl", "42": "cyl", "47": "cyl", "49": "cyl",               # Segovia .. Zamora
+    "15": "gal", "27": "gal", "32": "gal", "36": "gal",               # A Coruna .. Pontevedra
+}
+
 ID_KEYS = ("GISCO_ID", "LAU_ID", "COMM_ID", "id")
 NAME_KEYS = ("LAU_NAME", "NAME_LATN", "LAU_NAME_LATIN", "NSI_CODE", "name")
-NUTS_KEYS = ("NUTS3_CODE", "NUTS_3", "NUTS3", "NUTS_CODE")
+NUTS_KEYS = ("NUTS3_CODE", "NUTS_3", "NUTS3", "NUTS_CODE", "NUTS3_2021", "NUTS_ID")
 CNTR_KEYS = ("CNTR_CODE", "CNTR_ID", "COUNTRY")
 
 
@@ -76,14 +87,52 @@ def to_rows(features: list[dict], region_by_nuts2: dict[str, str] | None = None)
         if not code or not f.get("geometry"):
             skipped["zonder code of geometrie"] = skipped.get("zonder code of geometrie", 0) + 1
             continue
-        region = region_by_nuts2.get((nuts or "")[:4])
+        region = region_by_nuts2.get((nuts or "")[:4]) or _region_from_code(code, cntr)
         if not region:
             key = f"buiten onze regio's ({cntr or 'onbekend land'})"
             skipped[key] = skipped.get(key, 0) + 1
             continue
         rows.append({"code": code, "name": name or code, "region_code": region,
                      "geometry": f["geometry"]})
-    return {"rows": rows, "skipped": skipped, "fields_used": used}
+    out = {"rows": rows, "skipped": skipped, "fields_used": used}
+    if not rows:
+        # Niets herkend. Dan is de vraag niet "waarom nul" maar "wat stond erin",
+        # en dat hoort in dezelfde uitvoer te staan als de nul.
+        out["diagnose"] = diagnose(features)
+    return out
+
+
+def _region_from_code(code: str, cntr: str | None) -> str | None:
+    """Regio afleiden uit de gemeentecode zelf, als er geen NUTS-veld is.
+
+    GISCO zet er ES_10148 van, het IGN 10148: in beide gevallen zijn de laatste
+    vijf tekens de INE-code en de eerste twee daarvan de provincie.
+    """
+    if cntr and cntr.upper() not in ("ES", ""):
+        return None
+    digits = "".join(ch for ch in code if ch.isdigit())
+    if len(digits) < 5:
+        return None
+    return REGION_BY_ES_PROVINCE.get(digits[-5:][:2])
+
+
+def diagnose(features: list[dict], n: int = 3) -> dict:
+    """Wat stond er dan wel in het bestand?
+
+    Zonder dit is een mislukte run alleen maar 'nul gemeenten' en moet je zelf
+    123 MB gaan openen. Met dit is een mislukte run een bruikbaar rapport.
+    """
+    keys, voorbeelden = set(), []
+    for f in features[:200]:
+        p = f.get("properties") or {}
+        keys |= set(p)
+        if len(voorbeelden) < n:
+            voorbeelden.append({k: p[k] for k in list(p)[:12]})
+    return {"aantal_features": len(features),
+            "beschikbare_velden": sorted(keys),
+            "eerste_features": voorbeelden,
+            "gezocht_naar": {"id": list(ID_KEYS), "naam": list(NAME_KEYS),
+                             "nuts": list(NUTS_KEYS), "land": list(CNTR_KEYS)}}
 
 
 UPSERT = """
@@ -108,5 +157,8 @@ def load(c, path: Path) -> dict:
     srid = detect_srid(features)
     parsed = to_rows(features)
     n = insert(c, parsed["rows"], srid)
-    return {"features": len(features), "srid": srid, "inserted": n,
-            "skipped": parsed["skipped"], "fields_used": parsed["fields_used"]}
+    res = {"features": len(features), "srid": srid, "inserted": n,
+           "skipped": parsed["skipped"], "fields_used": parsed["fields_used"]}
+    if "diagnose" in parsed:
+        res["diagnose"] = parsed["diagnose"]
+    return res

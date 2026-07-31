@@ -14,13 +14,21 @@ services:
     name: terra-commons
     runtime: static
     staticPublishPath: ./site
-    buildCommand: ""            # niets te bouwen: data.json staat in de repo
-    pullRequestPreviewsEnabled: true
+
+    # Verplicht veld, ook als er niets te bouwen valt: een lege string laat de
+    # deploy falen. Deze regel controleert meteen of data.json echt in de repo
+    # zit, want zonder dat bestand toont de site haar noodrantsoen.
+    buildCommand: test -f site/data.json && echo "data.json aanwezig, niets te bouwen"
+
+    previews:
+      generation: automatic     # elke pull request krijgt een eigen URL
+
     headers:
       - path: /data.json
         name: Cache-Control
         value: no-store         # anders toont een bezoeker oude cijfers na een deploy
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+
+    # Bewust GEEN catch-all rewrite naar /index.html. Dit is geen single page app,
+    # en zo'n regel zou ook /data.json omleiden naar de HTML-pagina. De site laadt
+    # haar cijfers dan niet meer, en dat faalt stil: de pagina valt netjes terug op
+    # haar ingebouwde waarden en ziet er verder normaal uit.
