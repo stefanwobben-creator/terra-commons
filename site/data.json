@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-31T10:21:40+00:00",
+ "generated_at": "2026-07-31T14:46:03+00:00",
  "thresholds": {
   "rel": 80,
   "cmp": 100,
@@ -7,111 +7,97 @@
  },
  "readiness": {
   "country": {
-   "cells": 5,
-   "present": 4,
-   "verified": 2,
+   "cells": 1,
+   "present": 1,
+   "verified": 1,
    "vars": 1,
    "vars_comparable": 1,
-   "reliable_pct": 50,
+   "reliable_pct": 100,
    "comparable_pct": 100,
-   "complete_pct": 80,
-   "gate_open": false
+   "complete_pct": 100,
+   "gate_open": true
   },
   "region": {
-   "cells": 48,
-   "present": 39,
-   "verified": 24,
+   "cells": 18,
+   "present": 18,
+   "verified": 11,
    "vars": 6,
    "vars_comparable": 3,
-   "reliable_pct": 62,
+   "reliable_pct": 61,
    "comparable_pct": 50,
-   "complete_pct": 81,
+   "complete_pct": 100,
    "gate_open": false
   }
  },
  "blocking_vars": [
   {
-   "tier": "country",
-   "variable": "legal_gate_inputs",
-   "cells": 5,
-   "verified": 2,
-   "comparable": true,
-   "notes": "De combinatie sluit de poort: een Nederlandse stichting zonder vijf jaar geschiedenis ter plaatse valt buiten de gekwalificeerde kopers, en de heffing van 80 procent bij doorverkoop binnen acht jaar maakt een fout onherstelbaar. | Geen kwalificatie-eis voor EU-particulieren. Het BUPi-kadaster is nog in opbouw, wat een perceelrisico is en geen landpoort. | Ley 19/1995 art. 27: alleen retracto voor aangrenzende eigenaren onder tweemaal de kaveleenheid, geen tanteo, plus zes jaar doorverkoopverbod bij fiscaal begunstigde overdracht. Ley 1/1986 Extremadura nog geldend, de heffing uit art. 21 tot 27 is geschrapt door Ley 8/2002. | Openstaand. lex.bg gaf 403 en EUR-Lex is niet op te halen, dus de wettekst is niet gelezen. Zolang dit zo staat is Bulgarije niet afgewezen maar ongemeten. | Prelazione agraria voor pachter en aangrenzende beroepslandbouwer is een procesrisico bij de akte, geen verbod. Klimaat- en brandcijfers zijn hier niet ingewonnen, dus de regioscore blijft leeg."
-  },
-  {
    "tier": "region",
    "variable": "burned_ha",
-   "cells": 8,
-   "verified": 1,
+   "cells": 3,
+   "verified": 0,
    "comparable": false,
    "notes": "Jaartotalen naast meerjarige gemiddelden, en verschillende noemers. Precies de fout die de rangschikking eerder verkeerd liet uitpakken."
   },
   {
    "tier": "region",
    "variable": "buyer_access",
-   "cells": 8,
-   "verified": 4,
-   "comparable": true,
-   "notes": null
-  },
-  {
-   "tier": "region",
-   "variable": "cadastre_class",
-   "cells": 8,
-   "verified": 5,
-   "comparable": true,
-   "notes": null
-  },
-  {
-   "tier": "region",
-   "variable": "cost_pct",
-   "cells": 8,
-   "verified": 6,
+   "cells": 3,
+   "verified": 2,
    "comparable": true,
    "notes": null
   },
   {
    "tier": "region",
    "variable": "price_eur_ha",
-   "cells": 8,
-   "verified": 3,
+   "cells": 3,
+   "verified": 0,
    "comparable": false,
    "notes": "Drie meetmethoden door elkaar: transactie-enquête in Spanje, vraagprijzen op portals in Portugal, taxatiewaarden per hoogtezone in Italië, Eurostat in Roemenië en Bulgarije."
   },
   {
    "tier": "region",
    "variable": "rain_mm",
-   "cells": 8,
-   "verified": 5,
+   "cells": 3,
+   "verified": 3,
    "comparable": false,
-   "notes": "Verschillende referentieperioden door elkaar: 1981 tot 2010 naast 1991 tot 2020, en voor Roemenië een reeks van 2014 tot 2026."
+   "notes": "Verschillende referentieperioden door elkaar: 1981 tot 2010 naast 1991 tot 2020, en voor Roemenië een reeks van 2014 tot 2026. | oppervlaktegewogen uit 2 gemeenten, raster 1 km, periode 1981-2010; spreiding 400 tot 1200 mm binnen de regio | oppervlaktegewogen uit 2 gemeenten, raster 1 km, periode 1981-2010; spreiding 500 tot 700 mm binnen de regio"
   }
  ],
  "countries": {
   "BG": {
    "name": "Bulgarije",
    "gate_open": null,
-   "gate_reason": "niet vastgesteld: buy_allowed, use_obligation"
+   "gate_reason": "niet vastgesteld: buy_allowed, use_obligation",
+   "in_scope": false,
+   "scope_note": "Buiten de scope. De wettekst is nooit gelezen, en zolang dat zo is is dit geen vergelijking maar een gat."
   },
   "ES": {
    "name": "Spanje",
    "gate_open": true,
-   "gate_reason": null
+   "gate_reason": null,
+   "in_scope": true,
+   "scope_note": "Binnen de scope. Het enige land waar alle drie de lagen bestaan: gemeenten met open geometrie, een raster met uniforme periode, en SIGPAC-percelen."
   },
   "IT": {
    "name": "Italie",
    "gate_open": true,
-   "gate_reason": null
+   "gate_reason": null,
+   "in_scope": false,
+   "scope_note": "Buiten de scope. Basilicata en Sardinie samen zijn geen NUTS2-eenheid, dus deze regio kan per definitie geen gemeenten krijgen."
   },
   "PT": {
    "name": "Portugal",
    "gate_open": true,
-   "gate_reason": null
+   "gate_reason": null,
+   "in_scope": false,
+   "scope_note": "Buiten de scope, voorlopig. Het onderzoek blijft staan en Beira Interior scoorde goed op water; het BUPi-kadaster is nog in opbouw en dat maakt de perceellaag onbetrouwbaar."
   },
   "RO": {
    "name": "Roemenie",
    "gate_open": false,
-   "gate_reason": "kwalificatie-eis: vijf jaar woonplaats, vijf jaar landbouwactiviteit en fiscale inschrijving in Roemenie (Legea 17/2014 zoals gewijzigd door Legea 175/2020); verplicht exclusief agrarisch gebruik, botst met passief herstel; heffing 80% bij doorverkoop binnen 8 jaar"
+   "gate_reason": "kwalificatie-eis: vijf jaar woonplaats, vijf jaar landbouwactiviteit en fiscale inschrijving in Roemenie (Legea 17/2014 zoals gewijzigd door Legea 175/2020); verplicht exclusief agrarisch gebruik, botst met passief herstel; heffing 80% bij doorverkoop binnen 8 jaar",
+   "in_scope": false,
+   "scope_note": "Buiten de scope. De landpoort staat dicht, en het dossier dekt meerdere NUTS-regio's zonder eigen gemeentelaag."
   }
  },
  "regions": {
@@ -120,37 +106,37 @@
    "country": "PT",
    "nuts2": "PT18",
    "q": {
-    "price": "ind",
     "cost": "ver",
-    "rain": "ver",
     "fire": "ind",
-    "access": "ver",
-    "cadastre": "ver"
+    "price": "ind",
+    "rain": "ver",
+    "cadastre": "ver",
+    "access": "ver"
    },
    "values": {
-    "price": {
-     "num": 8150.0,
-     "txt": "5800-10500"
-    },
     "cost": {
      "num": 6.25,
      "txt": "6,0–6,5%"
-    },
-    "rain": {
-     "num": 642.5,
-     "txt": "447-838"
     },
     "fire": {
      "num": 9000.0,
      "txt": "hele regio, indicatief"
     },
-    "access": {
-     "num": null,
-     "txt": "good"
+    "price": {
+     "num": 8150.0,
+     "txt": "5800-10500"
+    },
+    "rain": {
+     "num": 642.5,
+     "txt": "447-838"
     },
     "cadastre": {
      "num": null,
      "txt": "Verouderd"
+    },
+    "access": {
+     "num": null,
+     "txt": "good"
     }
    },
    "score": {
@@ -170,26 +156,14 @@
    "country": "PT",
    "nuts2": "PT16",
    "q": {
-    "access": "ver",
-    "price": "ind",
-    "cost": "ver",
     "rain": "ver",
     "fire": "ver",
+    "access": "ver",
+    "cost": "ver",
+    "price": "ind",
     "cadastre": "ver"
    },
    "values": {
-    "access": {
-     "num": null,
-     "txt": "good"
-    },
-    "price": {
-     "num": 4750.0,
-     "txt": "3100-6400"
-    },
-    "cost": {
-     "num": 6.9,
-     "txt": "6,3–7,5%"
-    },
     "rain": {
      "num": 1154.5,
      "txt": "744-1565"
@@ -197,6 +171,18 @@
     "fire": {
      "num": 83790.0,
      "txt": "district Guarda, 31% van heel Portugal"
+    },
+    "access": {
+     "num": null,
+     "txt": "good"
+    },
+    "cost": {
+     "num": 6.9,
+     "txt": "6,3–7,5%"
+    },
+    "price": {
+     "num": 4750.0,
+     "txt": "3100-6400"
     },
     "cadastre": {
      "num": null,
@@ -269,25 +255,17 @@
    "country": "ES",
    "nuts2": "ES41",
    "q": {
-    "cost": "ver",
     "price": "ind",
-    "rain": "ver",
     "fire": "ind",
     "cadastre": "ver",
-    "access": "ver"
+    "access": "ver",
+    "rain": "ver",
+    "cost": "ver"
    },
    "values": {
-    "cost": {
-     "num": 9.75,
-     "txt": "9–10,5%"
-    },
     "price": {
      "num": 2325.0,
      "txt": "750-3900"
-    },
-    "rain": {
-     "num": 924.5,
-     "txt": "379-1470"
     },
     "fire": {
      "num": 138538.0,
@@ -300,6 +278,14 @@
     "access": {
      "num": null,
      "txt": "good"
+    },
+    "rain": {
+     "num": 600.0,
+     "txt": null
+    },
+    "cost": {
+     "num": 9.75,
+     "txt": "9–10,5%"
     }
    },
    "score": {
@@ -321,10 +307,10 @@
    "q": {
     "cost": "ver",
     "cadastre": "ver",
-    "price": "ind",
+    "access": "ver",
     "rain": "ver",
-    "fire": "ind",
-    "access": "ver"
+    "price": "ind",
+    "fire": "ind"
    },
    "values": {
     "cost": {
@@ -335,21 +321,21 @@
      "num": null,
      "txt": "Goed"
     },
+    "access": {
+     "num": null,
+     "txt": "good"
+    },
+    "rain": {
+     "num": 1192.1,
+     "txt": null
+    },
     "price": {
      "num": 4250.0,
      "txt": "3500-5000"
     },
-    "rain": {
-     "num": 864.0,
-     "txt": "428-1300"
-    },
     "fire": {
      "num": 10863.0,
      "txt": "brandvlakte 2023"
-    },
-    "access": {
-     "num": null,
-     "txt": "good"
     }
    },
    "score": {
@@ -368,22 +354,14 @@
    "country": "ES",
    "nuts2": "ES11",
    "q": {
-    "price": "ind",
-    "cost": "ver",
     "rain": "ver",
     "fire": "ind",
-    "cadastre": "ver",
-    "access": "ind"
+    "access": "ind",
+    "price": "ind",
+    "cost": "ver",
+    "cadastre": "ver"
    },
    "values": {
-    "price": {
-     "num": 1750.0,
-     "txt": "500-3000"
-    },
-    "cost": {
-     "num": 2.5,
-     "txt": "~2–3%"
-    },
     "rain": {
      "num": 1301.0,
      "txt": "811-1791"
@@ -392,13 +370,21 @@
      "num": 120000.0,
      "txt": "augustus 2025, zwaarste golf van de eeuw"
     },
-    "cadastre": {
-     "num": null,
-     "txt": "Onbruikbaar"
-    },
     "access": {
      "num": null,
      "txt": "warn"
+    },
+    "price": {
+     "num": 1750.0,
+     "txt": "500-3000"
+    },
+    "cost": {
+     "num": 2.5,
+     "txt": "~2–3%"
+    },
+    "cadastre": {
+     "num": null,
+     "txt": "Onbruikbaar"
     }
    },
    "score": {
@@ -418,25 +404,17 @@
    "country": "IT",
    "nuts2": null,
    "q": {
-    "price": "ver",
     "cost": "ver",
-    "rain": "mis",
     "fire": "mis",
     "cadastre": "ind",
+    "price": "ver",
+    "rain": "mis",
     "access": "ind"
    },
    "values": {
-    "price": {
-     "num": 4900.0,
-     "txt": "4800-5000"
-    },
     "cost": {
      "num": 16.5,
      "txt": "15–18%"
-    },
-    "rain": {
-     "num": null,
-     "txt": null
     },
     "fire": {
      "num": null,
@@ -445,6 +423,14 @@
     "cadastre": {
      "num": null,
      "txt": "Zwak"
+    },
+    "price": {
+     "num": 4900.0,
+     "txt": "4800-5000"
+    },
+    "rain": {
+     "num": null,
+     "txt": null
     },
     "access": {
      "num": null,
@@ -471,8 +457,8 @@
     "cost": "mis",
     "rain": "ind",
     "fire": "mis",
-    "cadastre": "ind",
-    "access": "ind"
+    "access": "ind",
+    "cadastre": "ind"
    },
    "values": {
     "price": {
@@ -491,13 +477,13 @@
      "num": null,
      "txt": null
     },
-    "cadastre": {
-     "num": null,
-     "txt": "Incompleet"
-    },
     "access": {
      "num": null,
      "txt": "crit"
+    },
+    "cadastre": {
+     "num": null,
+     "txt": "Incompleet"
     }
    },
    "score": {
@@ -515,6 +501,10 @@
  "funnel": {
   "country": {
    "pending": 1,
+   "promoted": 3,
+   "rejected": 1
+  },
+  "municipality": {
    "promoted": 3,
    "rejected": 1
   },
@@ -577,20 +567,20 @@
   "complete": false
  },
  "sources": {
-  "sources": 17,
+  "sources": 18,
   "automatable": 10,
-  "manual": 7,
+  "manual": 8,
   "per_tier": {
    "country": 1,
-   "region": 4,
+   "region": 5,
    "municipality": 6,
    "parcel": 6
   },
   "per_cadence": {
    "once": 3,
    "annual": 8,
-   "seasonal": 1,
-   "on_demand": 5
+   "on_demand": 6,
+   "seasonal": 1
   },
   "gates_automatable": {
    "K4": true,
@@ -600,53 +590,86 @@
  },
  "manual_debt": [
   {
-   "id": "legal-country",
-   "name": "Wetteksten per land (BOE, DRE, Monitorul, DV)",
-   "tier": "country",
-   "cadence": "once",
-   "overdue": true
-  },
-  {
-   "id": "ex-fiscal-values",
-   "name": "Valores fiscales minimos Extremadura",
-   "tier": "municipality",
-   "cadence": "on_demand",
-   "overdue": true
-  },
-  {
-   "id": "umc-decreto-46-1997",
-   "name": "Unidad minima de cultivo, Decreto 46/1997",
-   "tier": "municipality",
-   "cadence": "once",
-   "overdue": true
-  },
-  {
    "id": "zar-fire-zones",
    "name": "Zonas de Alto Riesgo de incendio",
    "tier": "municipality",
    "cadence": "on_demand",
-   "overdue": true
+   "overdue": true,
+   "unlocks": "De drempel van K8 per gemeente: boven 200 ha in een risicozone in plaats van boven 400 ha overal.",
+   "unlocks_en": "The K8 threshold per municipality: above 200 ha in a risk zone instead of above 400 ha everywhere."
   },
   {
    "id": "ibi-ordenanzas",
    "name": "Gemeentelijke IBI-verordeningen",
    "tier": "municipality",
    "cadence": "annual",
-   "overdue": true
+   "overdue": true,
+   "unlocks": "Het jaarlijkse tarief per gemeente. Mogelijk helemaal geen handwerk: het ministerie publiceert dit centraal.",
+   "unlocks_en": "The annual rate per municipality. Possibly no handwork at all: the ministry publishes this centrally."
   },
   {
    "id": "registro-propiedad",
    "name": "Nota simple, Registro de la Propiedad",
    "tier": "parcel",
    "cadence": "on_demand",
-   "overdue": true
+   "overdue": true,
+   "unlocks": "K5 per perceel, plus eigenaar en lasten. Dit is de poort die geen enkele automaat kan nemen.",
+   "unlocks_en": "K5 per parcel, plus owner and charges. This is the gate no automation can take."
   },
   {
    "id": "listings",
    "name": "Advertenties op portals",
    "tier": "parcel",
    "cadence": "on_demand",
-   "overdue": true
+   "overdue": true,
+   "unlocks": "De trechter terug op dertig waarnemingen, en vanaf dan prijsverloop in plaats van een momentopname.",
+   "unlocks_en": "The funnel back to thirty observations, and from then on price history instead of a snapshot."
+  },
+  {
+   "id": "legal-country",
+   "name": "Wetteksten per land (BOE, DRE, Monitorul, DV)",
+   "tier": "country",
+   "cadence": "once",
+   "overdue": true,
+   "unlocks": "De landpoort per land. Voor Spanje rond; alleen Bulgarije is nooit gelezen, en dat land staat buiten de scope.",
+   "unlocks_en": "The country gate. Settled for Spain; only Bulgaria was never read, and it is out of scope."
+  },
+  {
+   "id": "station-normals",
+   "name": "Stationsnormalen uit nationale weerdiensten",
+   "tier": "region",
+   "cadence": "on_demand",
+   "overdue": true,
+   "unlocks": "Niets meer. Vervangen door het raster; staat er nog om te laten zien waar de oude regiocijfers vandaan kwamen.",
+   "unlocks_en": "Nothing anymore. Superseded by the raster; kept to show where the old regional figures came from."
+  },
+  {
+   "id": "ex-fiscal-values",
+   "name": "Valores fiscales minimos Extremadura",
+   "tier": "municipality",
+   "cadence": "on_demand",
+   "overdue": true,
+   "unlocks": "Prijs per gemeente in plaats van per regio. Let op: een fiscale ondergrens, geen marktprijs.",
+   "unlocks_en": "Price per municipality instead of per region. Note: a tax floor, not a market price."
+  },
+  {
+   "id": "umc-decreto-46-1997",
+   "name": "Unidad minima de cultivo, Decreto 46/1997",
+   "tier": "municipality",
+   "cadence": "once",
+   "overdue": true,
+   "unlocks": "K3 exact per gemeente in plaats van de landelijke terugval van 16 ha. Een bijlage dekt heel Extremadura.",
+   "unlocks_en": "K3 exact per municipality instead of the national fallback of 16 ha. One annex covers all of Extremadura."
+  }
+ ],
+ "waiting_automatable": [
+  {
+   "id": "effis-fires",
+   "name": "EFFIS brandperimeters",
+   "tier": "region",
+   "unlocks": "De cel die de rangorde Extremadura tegen Castilla y Leon beslecht. Wacht op de sonde.",
+   "unlocks_en": "The cell that settles Extremadura versus Castilla y Leon. Waiting on the probe.",
+   "gesondeerd": true
   }
  ],
  "weight_audit": {
@@ -654,5 +677,38 @@
   "documented": 100,
   "delta": 35,
   "consistent": false
- }
+ },
+ "scope": {
+  "in": [
+   "ES"
+  ],
+  "out": [
+   {
+    "code": "BG",
+    "name": "Bulgarije",
+    "scope_note": "Buiten de scope. De wettekst is nooit gelezen, en zolang dat zo is is dit geen vergelijking maar een gat.",
+    "regios": 1
+   },
+   {
+    "code": "IT",
+    "name": "Italie",
+    "scope_note": "Buiten de scope. Basilicata en Sardinie samen zijn geen NUTS2-eenheid, dus deze regio kan per definitie geen gemeenten krijgen.",
+    "regios": 1
+   },
+   {
+    "code": "PT",
+    "name": "Portugal",
+    "scope_note": "Buiten de scope, voorlopig. Het onderzoek blijft staan en Beira Interior scoorde goed op water; het BUPi-kadaster is nog in opbouw en dat maakt de perceellaag onbetrouwbaar.",
+    "regios": 2
+   },
+   {
+    "code": "RO",
+    "name": "Roemenie",
+    "scope_note": "Buiten de scope. De landpoort staat dicht, en het dossier dekt meerdere NUTS-regio's zonder eigen gemeentelaag.",
+    "regios": 1
+   }
+  ]
+ },
+ "municipalities": [],
+ "rain_thresholds": []
 }

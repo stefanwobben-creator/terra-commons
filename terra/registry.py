@@ -23,13 +23,19 @@ class Source:
     licence: Optional[str] = None
     covers: tuple[str, ...] = ()
     notes: Optional[str] = None
+    # Wat deze bron oplevert zodra hij binnen is. Staat hier en niet op de site,
+    # zodat er een plek is waar het antwoord leeft in plaats van twee.
+    unlocks: Optional[str] = None
+    unlocks_en: Optional[str] = None
 
 
 SOURCES: tuple[Source, ...] = (
     Source("legal-country", "Wetteksten per land (BOE, DRE, Monitorul, DV)", "country",
            "once", False, covers=("buy_allowed", "buy_conditions", "use_obligation",
                                   "exit_levy_pct"),
-           notes="lezen en uitleggen is mensenwerk; lex.bg blokkeert bovendien"),
+           notes="lezen en uitleggen is mensenwerk; lex.bg blokkeert bovendien",
+           unlocks=("De landpoort per land. Voor Spanje rond; alleen Bulgarije is nooit gelezen, en dat land staat buiten de scope."),
+           unlocks_en=("The country gate. Settled for Spain; only Bulgaria was never read, and it is out of scope.")),
     Source("eurostat-lprc", "Eurostat land prices and rents", "region", "annual", True,
            url="https://ec.europa.eu/eurostat/web/agriculture/database",
            licence="Eurostat open", covers=("price_eur_ha",)),
@@ -40,27 +46,39 @@ SOURCES: tuple[Source, ...] = (
            notes=("handmatig verzamelde normalen met verschillende referentieperioden "
                   "(1981-2010 naast 1991-2020 naast een reeks 2014-2026). Dit is de bron "
                   "die neerslag onvergelijkbaar maakt, en hij hoorde niet onder de vlag "
-                  "van CHELSA te staan")),
+                  "van CHELSA te staan"),
+           unlocks=("Niets meer. Vervangen door het raster; staat er nog om te laten zien waar de oude regiocijfers vandaan kwamen."),
+           unlocks_en=("Nothing anymore. Superseded by the raster; kept to show where the old regional figures came from.")),
     Source("chelsa-climate", "CHELSA V2 klimaatraster 1 km", "region", "once", True,
            url="https://chelsa-climate.org", licence="CC BY 4.0",
            covers=("rain_mm", "tmax_summer", "frost_days"),
            notes="uniforme referentieperiode; lost de vergelijkbaarheidsfout op"),
     Source("effis-fires", "EFFIS brandperimeters", "region", "seasonal", True,
-           url="https://effis.jrc.ec.europa.eu", covers=("burned_ha", "fire_base_rate")),
+           url="https://effis.jrc.ec.europa.eu", covers=("burned_ha", "fire_base_rate"),
+           unlocks=("De cel die de rangorde Extremadura tegen Castilla y Leon beslecht. Wacht op de sonde."),
+           unlocks_en=("The cell that settles Extremadura versus Castilla y Leon. Waiting on the probe.")),
     Source("gisco-lau", "GISCO LAU gemeentegrenzen", "municipality", "annual", True,
            url="https://ec.europa.eu/eurostat/web/gisco", covers=("geom", "area_ha")),
     Source("ign-lineas-limite", "IGN Lineas Limite", "municipality", "annual", True,
            url="https://centrodedescargas.cnig.es", covers=("geom",)),
     Source("ex-fiscal-values", "Valores fiscales minimos Extremadura", "municipality",
            "on_demand", False, covers=("fiscal_min_eur_ha",),
-           notes="per gemeente per gewasklasse gepubliceerd, als PDF"),
+           notes="per gemeente per gewasklasse gepubliceerd, als PDF",
+           unlocks=("Prijs per gemeente in plaats van per regio. Let op: een fiscale ondergrens, geen marktprijs."),
+           unlocks_en=("Price per municipality instead of per region. Note: a tax floor, not a market price.")),
     Source("umc-decreto-46-1997", "Unidad minima de cultivo, Decreto 46/1997",
            "municipality", "once", False, covers=("umc_ha",),
-           notes="bijlage met gemeentegroepen alleen als DOE-PDF"),
+           notes="bijlage met gemeentegroepen alleen als DOE-PDF",
+           unlocks=("K3 exact per gemeente in plaats van de landelijke terugval van 16 ha. Een bijlage dekt heel Extremadura."),
+           unlocks_en=("K3 exact per municipality instead of the national fallback of 16 ha. One annex covers all of Extremadura.")),
     Source("zar-fire-zones", "Zonas de Alto Riesgo de incendio", "municipality",
-           "on_demand", False, covers=("zar",)),
+           "on_demand", False, covers=("zar",),
+           unlocks=("De drempel van K8 per gemeente: boven 200 ha in een risicozone in plaats van boven 400 ha overal."),
+           unlocks_en=("The K8 threshold per municipality: above 200 ha in a risk zone instead of above 400 ha everywhere.")),
     Source("ibi-ordenanzas", "Gemeentelijke IBI-verordeningen", "municipality",
-           "annual", False, covers=("ibi_pct",)),
+           "annual", False, covers=("ibi_pct",),
+           unlocks=("Het jaarlijkse tarief per gemeente. Mogelijk helemaal geen handwerk: het ministerie publiceert dit centraal."),
+           unlocks_en=("The annual rate per municipality. Possibly no handwork at all: the ministry publishes this centrally.")),
     Source("sigpac-recintos", "SIGPAC recintos", "parcel", "annual", True,
            url="https://sigpac-hubcloud.es", licence="CC BY 4.0",
            covers=("geom", "ha", "slope_pct", "altitude_m", "use_class")),
@@ -72,10 +90,14 @@ SOURCES: tuple[Source, ...] = (
            covers=("k4_ok",), notes="benadering van K4; bevestiging blijft nodig"),
     Source("registro-propiedad", "Nota simple, Registro de la Propiedad", "parcel",
            "on_demand", False, covers=("k5_ok", "owner", "charges"),
-           notes="per perceel aanvragen en betalen; dit is de poort die de nacht stopt"),
+           notes="per perceel aanvragen en betalen; dit is de poort die de nacht stopt",
+           unlocks=("K5 per perceel, plus eigenaar en lasten. Dit is de poort die geen enkele automaat kan nemen."),
+           unlocks_en=("K5 per parcel, plus owner and charges. This is the gate no automation can take.")),
     Source("listings", "Advertenties op portals", "parcel", "on_demand", False,
            covers=("price_eur", "listing_url"),
-           notes="scrapen is in strijd met de voorwaarden; handmatig met URL en datum"),
+           notes="scrapen is in strijd met de voorwaarden; handmatig met URL en datum",
+           unlocks=("De trechter terug op dertig waarnemingen, en vanaf dan prijsverloop in plaats van een momentopname."),
+           unlocks_en=("The funnel back to thirty observations, and from then on price history instead of a snapshot.")),
 )
 
 BY_ID = {s.id: s for s in SOURCES}

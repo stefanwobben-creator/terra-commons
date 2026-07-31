@@ -363,6 +363,33 @@ html[data-theme="dark"] .dim .scope.p{color:var(--series-3)}
 /* Een brede tabel mag scrollen binnen haar eigen kader, niet de hele pagina
    meesleuren. overflow-x op de tabel zelf werkt niet, het moet een wrapper zijn. */
 .tscroll{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+/* ---------- gemeentelaag en scope ---------- */
+.scoperow{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:20px}
+.scopecard{background:var(--surface-1);border:1px solid var(--hair);border-radius:12px;padding:14px 16px}
+.scopecard.in{border-left:3px solid var(--good,#0ca30c)}
+.scopecard.out{border-left:3px solid var(--hair)}
+.scopecard b{font-size:15px}
+.scopecard p{margin:6px 0 0;font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.thbar{display:flex;align-items:center;gap:10px;margin:3px 0}
+.thbar .lab{display:block;width:74px;flex:none;font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink-2);text-align:right}
+.thbar .track{display:block;flex:1;height:16px;background:var(--surface-2);border-radius:4px;overflow:hidden}
+/* span is van zichzelf inline; zonder display:block doet width niets */
+.thbar .fill{display:block;height:100%;background:var(--series-1);border-radius:4px;opacity:.32}
+.thbar.is-key .fill{opacity:1}
+.thbar.is-key .lab{color:var(--ink);font-weight:700}
+.thbar .val{display:block;width:112px;flex:none;font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.wacht{display:grid;gap:8px;margin-top:22px}
+.wachtrij{display:grid;grid-template-columns:14px 1fr;gap:12px;align-items:start;
+  background:var(--surface-1);border:1px solid var(--hair);border-radius:10px;padding:13px 16px}
+.wachtrij .dot{width:8px;height:8px;border-radius:50%;margin-top:7px;background:var(--muted)}
+.wachtrij.mens .dot{background:var(--warning,#fab219)}
+.wachtrij.auto .dot{background:var(--series-1)}
+.wachtrij b{font-size:14.5px;font-weight:640}
+.wachtrij .wat{display:block;font-size:13.5px;color:var(--ink-2);margin-top:3px;line-height:1.5}
+.wachtrij .hoe{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--muted);margin-top:7px}
+.leeg{background:var(--surface-2);border:1px dashed var(--hair);border-radius:12px;
+      padding:18px 20px;color:var(--ink-2);font-size:14.5px;line-height:1.6;margin-top:20px}
 .minitable{width:100%;min-width:520px;border-collapse:collapse;font-size:13.5px;margin-top:6px}
 .minitable th{text-align:left;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--hair)}
 .minitable td{padding:9px 10px;border-bottom:1px solid var(--hair);color:var(--ink-2)}
@@ -796,6 +823,10 @@ html[data-theme="dark"] .proto{color:var(--warning);background:#2a2312;border-co
       <p class="note" data-i18n="d.note">Eigen berekening: verbrand oppervlak gedeeld door regio-oppervlak. Dit is een gemiddelde over een hele regio en zegt niets over een specifiek perceel; hellingen, naaldhout in de omgeving en toegangswegen bepalen dat.</p>
     </div>
 
+    <h3 style="margin-top:56px"><span data-i18n="m.h">De gemeentelaag</span><span class="think" data-i18n="chip.think">Wat we nu denken</span></h3>
+    <p class="sub" data-i18n="m.s">Een regio is een bestuurlijke eenheid en geen landschap. De spreiding binnen een regio bleek groter dan die tussen regio's, dus meet de regiovergelijking voor een deel ruis. Hieronder de laag die dat oplost: neerslag per gemeente uit een raster van 1 km met een uniforme referentieperiode, in plaats van stationsnormalen met verschillende perioden door elkaar.</p>
+    <div id="munis"></div>
+
     <h3 style="margin-top:56px"><span data-i18n="l.short.h">De shortlist</span><span class="think" data-i18n="chip.think">Wat we nu denken</span></h3>
     <p class="sub" data-i18n="l.short.s">Gerangschikt op haalbare impact per euro, dus met verwervingsrisico meegewogen en niet alleen ecologisch potentieel.</p>
     <div class="cards" id="cards"></div>
@@ -809,7 +840,12 @@ html[data-theme="dark"] .proto{color:var(--warning);background:#2a2312;border-co
     <h2 data-i18n="g.h2">Zijn we al klaar voor een conclusie?</h2>
     <p class="sub" data-i18n="g.sub">Nee. En dat is geen bescheidenheid maar een meting. Een conclusie mag pas als de data aan drie eisen voldoet: betrouwbaar, vergelijkbaar en volledig. Hieronder staat per eis hoe ver we zijn, berekend uit dezelfde dataset die je in sectie 2 ziet. Zolang één van de drie onder de drempel blijft, blijft alles hierboven een werkhypothese.</p>
 
-    <div class="gate" id="gate"></div>
+    <h3 style="margin-top:8px"><span data-i18n="sc.h">Waar de poort over rekent</span></h3>
+    <p class="sub" data-i18n="sc.s">Sinds 31 juli rekent de poort alleen over Spanje. Niet omdat het onderzoek naar de andere landen weg is, maar omdat Roemenië, Italië en Bulgarije in dit model dossiers zijn en geen NUTS2-regio's. Ze kunnen dus nooit gemeenten krijgen en nooit een rastergemeten neerslag, en zolang ze in de noemer stonden kon de vergelijkbaarheid per definitie niet naar 100 procent. Dat was een scopeprobleem en geen datakwaliteitsprobleem.</p>
+    <div class="scoperow" id="scope"></div>
+    <p class="note" data-i18n="sc.n">De volledigheid sprong daarmee van 81 naar 100 procent, want alle lege cellen zaten buiten Spanje. De vergelijkbaarheid bewoog niet, en dat is het punt: een kleinere vraag maakt de metingen niet beter.</p>
+
+    <div class="gate" id="gate" style="margin-top:34px"></div>
     <div id="gateverdict"></div>
 
     <h3 style="margin-top:52px" data-i18n="g.mx.h">Waar de gaten zitten</h3>
@@ -863,6 +899,15 @@ html[data-theme="dark"] .proto{color:var(--warning);background:#2a2312;border-co
 </section>
 
 <!-- ============ SECTION 6 — JOIN ============ -->
+<section id="wacht">
+  <div class="wrap">
+    <h3 style="margin-top:0"><span data-i18n="w.h">Waar het nu op wacht</span></h3>
+    <p class="sub" data-i18n="w.s">Achttien bronnen, tien die een machine kan ophalen en acht die een mens moet halen. Dat is geen tijdelijke stand maar de aard van de bronnen: een nota simple bij het eigendomsregister komt niet uit een download. Hieronder wat er open staat en wat elk stuk oplevert, rechtstreeks uit het bronregister.</p>
+    <div class="wacht" id="wacht"></div>
+    <p class="note" data-i18n="w.n">Geel is mensenwerk, blauw is een ophaler die nog gebouwd of nog getest moet worden. Dit lijstje is de eerlijke tegenhanger van een groen vinkje: het staat er niet omdat het af is, maar omdat het niet af is.</p>
+  </div>
+</section>
+
 <section id="join">
   <div class="wrap">
     <span class="snum">6</span>
@@ -1211,6 +1256,14 @@ const PH_IC = {
 const I18N = {
   nl:{}, /* NL staat in de HTML zelf */
   en:{
+    "w.h":"What it is waiting on",
+    "w.s":"Eighteen sources, ten a machine can fetch and eight a human has to collect. That is not a temporary state but the nature of the sources: a land registry extract does not come out of a download. Below is what is outstanding and what each piece unlocks, straight from the source register.",
+    "w.n":"Yellow is human work, blue is a fetcher still to be built or still to be tested. This list is the honest counterpart of a green checkmark: it is here because it is not done, not because it is.",
+    "m.h":"The municipality layer",
+    "m.s":"A region is an administrative unit, not a landscape. The spread within a region turned out to be larger than the spread between regions, so the regional comparison partly measures noise. Below is the layer that fixes it: rainfall per municipality from a 1 km raster with a uniform reference period, instead of station normals with different periods mixed together.",
+    "sc.h":"What the gate computes over",
+    "sc.s":"Since 31 July the gate covers Spain only. Not because the research into the other countries is gone, but because Romania, Italy and Bulgaria are dossiers in this model rather than NUTS2 regions. They can never have municipalities and never a raster-measured rainfall, and while they sat in the denominator comparability could not reach 100 percent by definition. That was a scope problem, not a data quality problem.",
+    "sc.n":"Completeness jumped from 81 to 100 percent as a result, because every empty cell sat outside Spain. Comparability did not move, and that is the point: a smaller question does not make the measurements better.",
     "ph.h":"The journey",
     "nav.prog":"Prognosis",
     "sc.h":"The region score",
@@ -1948,6 +2001,110 @@ function applyData(d){
 }
 let DATA = null;
 
+
+/* ============================================================
+   GEMEENTELAAG EN SCOPE
+   Allebei volledig uit data.json. Staat de laag er niet in, dan zegt de pagina
+   dat met zoveel woorden in plaats van een leeg kader te tonen: een lege grafiek
+   leest als "nul" en niet als "nog niet gemeten", en dat verschil is hier het
+   hele punt.
+   ============================================================ */
+const NL = () => LANG !== "en";
+
+function renderScope(){
+  const el = document.getElementById("scope");
+  if (!el) return;
+  const d = DATA;
+  if (!d || !d.scope) { el.innerHTML = ""; return; }
+  const landen = d.countries || {};
+  const binnen = (d.scope.in || []).map(code => {
+    const c = landen[code] || {};
+    return `<div class="scopecard in"><b>${c.name || code}</b>
+      <p>${(c.scope_note || "").replace(/</g,"&lt;")}</p></div>`;
+  });
+  const buiten = (d.scope.out || []).map(o =>
+    `<div class="scopecard out"><b>${(landen[o.code]||{}).name || o.code}</b>
+      <p>${(o.scope_note || "").replace(/</g,"&lt;")}</p></div>`);
+  el.innerHTML = binnen.concat(buiten).join("");
+}
+
+function renderMunis(){
+  const el = document.getElementById("munis");
+  if (!el) return;
+  const d = DATA;
+  const mun = (d && d.municipalities) || [];
+  const drem = (d && d.rain_thresholds) || [];
+  if (!mun.length) {
+    el.innerHTML = `<div class="leeg">${NL()
+      ? "De gemeentelaag is nog niet ingeladen in de versie die je nu ziet. Zodra de workflow <code>data</code> gedraaid heeft staan hier de neerslagcijfers per gemeente, met het bereik binnen elke gemeente en de doorlaat per ondergrens."
+      : "The municipality layer is not loaded in the version you are looking at. Once the <code>data</code> workflow has run, this shows rainfall per municipality, the range within each one, and the pass rate per threshold."}</div>`;
+    return;
+  }
+
+  const spreads = mun.map(m => m.spread).filter(x => x > 0).sort((a,b)=>a-b);
+  const mediaanSpread = spreads.length ? spreads[Math.floor(spreads.length/2)] : null;
+  const key = 450;
+  const bij450 = drem.find(t => +t.drempel === key);
+  const gemeten = drem.length ? +drem[0].gemeten : mun.length;
+
+  const tiles = `<div class="kpis" style="margin-top:28px">
+    <div class="tile"><div class="k">${NL()?"Gemeenten gemeten":"Municipalities measured"}</div>
+      <div class="v">${gemeten.toLocaleString(NL()?"nl-NL":"en-GB")}</div>
+      <div class="s">${NL()?"Uit een raster van 1 km, periode 1981 tot 2010":"From a 1 km raster, period 1981 to 2010"}</div></div>
+    <div class="tile"><div class="k">${NL()?"Haalt 450 mm":"Clears 450 mm"}</div>
+      <div class="v">${bij450 ? bij450.pct + " %" : "n.b."}</div>
+      <div class="s">${NL()?"De ondergrens voor dehesa-herstel filtert hier bijna niets":"The dehesa floor barely filters anything here"}</div></div>
+    <div class="tile"><div class="k">${NL()?"Spreiding binnen een gemeente":"Spread within a municipality"}</div>
+      <div class="v">${mediaanSpread ? mediaanSpread.toFixed(2).replace(".", NL()?",":".") + "x" : "n.b."}</div>
+      <div class="s">${NL()?"Mediaan van hoogste gedeeld door laagste":"Median of highest divided by lowest"}</div></div>
+  </div>`;
+
+  const max = Math.max(...drem.map(t => +t.gemeenten), 1);
+  const balken = drem.map(t => {
+    const n = +t.gemeenten, isKey = +t.drempel === key;
+    return `<div class="thbar${isKey ? " is-key" : ""}">
+      <span class="lab">${t.drempel} mm</span>
+      <span class="track"><span class="fill" style="width:${(100*n/max).toFixed(1)}%"></span></span>
+      <span class="val">${n.toLocaleString(NL()?"nl-NL":"en-GB")} · ${t.pct}%</span>
+    </div>`;
+  }).join("");
+
+  el.innerHTML = tiles + `
+    <h4 style="margin:38px 0 4px;font-size:17px;font-weight:650">${NL()
+      ? "Hoeveel gemeenten blijven er over per ondergrens" : "How many municipalities remain per floor"}</h4>
+    <p class="note" style="margin-top:0">${NL()
+      ? "Een reeks en geen getal, want de ondergrens is een keuze en geen eigenschap: 450 mm hoort bij dehesa-herstel, 500 bij Atlantisch loofbos. De gemarkeerde balk is de drempel die het model nu hanteert."
+      : "A series, not a number: the floor is a choice, not a property. 450 mm suits dehesa restoration, 500 mm Atlantic broadleaf. The highlighted bar is the threshold the model currently uses."}</p>
+    ${balken}
+    <p class="note">${NL()
+      ? "Let op het bereik binnen een gemeente. Een gemeente die van 200 tot 1.200 meter loopt heeft geen neerslagcijfer maar een bandbreedte; het gemiddelde is daar een zeef en geen meting. Het perceel bemonstert later rechtstreeks uit het raster."
+      : "Watch the range within a municipality. One that runs from 200 to 1,200 metres has no single rainfall figure but a band; the mean is a sieve there, not a measurement. The parcel samples the raster directly, later."}</p>`;
+}
+
+
+function renderWacht(){
+  const el = document.getElementById("wacht");
+  if (!el) return;
+  const d = DATA;
+  if (!d) { el.innerHTML = ""; return; }
+  const nl = NL();
+  const tekst = x => (nl ? x.unlocks : (x.unlocks_en || x.unlocks)) || "";
+  const rijen = [];
+  (d.waiting_automatable || []).forEach(x => rijen.push({
+    kind: "auto", naam: x.name, wat: tekst(x),
+    hoe: nl ? (x.gesondeerd ? "wacht op de sonde" : "ophaler te bouwen")
+            : (x.gesondeerd ? "waiting on the probe" : "fetcher to build") }));
+  (d.manual_debt || []).forEach(x => { if (tekst(x)) rijen.push({
+    kind: "mens", naam: x.name, wat: tekst(x),
+    hoe: nl ? "met de hand" : "by hand" }); });
+  if (!rijen.length) { el.innerHTML = ""; return; }
+  el.innerHTML = rijen.map(r => `<div class="wachtrij ${r.kind}">
+    <span class="dot"></span>
+    <span><b>${r.naam}</b><span class="wat">${r.wat}</span>
+      <span class="hoe">${r.hoe}</span></span>
+  </div>`).join("");
+}
+
 function stamp(ok, when){
   const el = document.getElementById("stamp");
   if (!el) return;
@@ -1967,8 +2124,8 @@ function stamp(ok, when){
 
 fetch("data.json", { cache: "no-store" })
   .then(r => r.ok ? r.json() : Promise.reject(r.status))
-  .then(d => { applyData(d); applyLang(); stamp(true, d.generated_at); })
-  .catch(() => { applyLang(); stamp(false); });
+  .then(d => { applyData(d); applyLang(); renderScope(); renderMunis(); renderWacht(); stamp(true, d.generated_at); })
+  .catch(() => { applyLang(); renderScope(); renderMunis(); renderWacht(); stamp(false); });
 </script>
 </body>
 </html>

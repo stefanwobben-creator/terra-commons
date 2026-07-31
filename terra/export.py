@@ -21,7 +21,7 @@ from pathlib import Path
 from . import db
 from .config import THRESHOLDS
 from .load_seed import VAR_MAP
-from .registry import BY_ID, summary
+from .registry import BY_ID, SOURCES, summary
 from .scoring import weight_audit
 from . import aggregate
 from .tiers import t1_region, t3_parcel
@@ -61,8 +61,14 @@ def build(c, generated_at: str | None = None) -> dict:
             regions[p["subject_id"]]["reasons"] = p["reasons"]
 
     countries = {r["code"]: {"name": r["name"], "gate_open": r["gate_open"],
-                             "gate_reason": r["gate_reason"]}
+                             "gate_reason": r["gate_reason"],
+                             "in_scope": r["in_scope"], "scope_note": r["scope_note"]}
                  for r in db.q(c, "select * from country order by code")}
+
+    # Buiten de scope is niet hetzelfde als weg. De pagina hoort te kunnen laten
+    # zien welk onderzoek er ligt en waarom het even niet meetelt.
+    scope = {"in": [k for k, v in countries.items() if v["in_scope"]],
+             "out": [dict(r) for r in db.q(c, "select * from v_out_of_scope")]}
 
     funnel: dict[str, dict] = {}
     for r in db.q(c, "select * from v_funnel"):
@@ -76,9 +82,24 @@ def build(c, generated_at: str | None = None) -> dict:
     quarantine["n"] = quarantine["dehesa"]["n"]
     quarantine["complete"] = quarantine["n"] >= 30
 
-    debt = [{"id": r["id"], "name": BY_ID[r["id"]].name if r["id"] in BY_ID else r["name"],
-             "tier": r["tier"], "cadence": r["cadence"], "overdue": r["overdue"]}
+    def _bron(rid, veld, terugval=None):
+        s = BY_ID.get(rid)
+        return getattr(s, veld, terugval) if s else terugval
+
+    debt = [{"id": r["id"], "name": _bron(r["id"], "name", r["name"]),
+             "tier": r["tier"], "cadence": r["cadence"], "overdue": r["overdue"],
+             "unlocks": _bron(r["id"], "unlocks"),
+             "unlocks_en": _bron(r["id"], "unlocks_en")}
             for r in db.q(c, "select * from v_manual_debt")]
+
+    # Bronnen die wel automatisch kunnen maar nog geen ophaler hebben. Die horen
+    # ook op de wachtlijst, anders lijkt "tien automatiseerbaar" op "tien geregeld".
+    from .fetch.sources import ALL as SONDE
+    gesondeerd = {x.id for x in SONDE}
+    wacht_auto = [{"id": s_.id, "name": s_.name, "tier": s_.tier,
+                   "unlocks": s_.unlocks, "unlocks_en": s_.unlocks_en,
+                   "gesondeerd": s_.id in gesondeerd}
+                  for s_ in SOURCES if s_.automatable and s_.unlocks]
 
     # De database van de workflow is een wegwerpmachine: zodra de taak klaar is
     # bestaat hij niet meer. Wat hier niet in komt, is weg. Daarom gaan de
@@ -96,7 +117,9 @@ def build(c, generated_at: str | None = None) -> dict:
         "quarantine": quarantine,
         "sources": summary(),
         "manual_debt": debt,
+        "waiting_automatable": wacht_auto,
         "weight_audit": weight_audit(),
+        "scope": scope,
         "municipalities": gemeenten,
         "rain_thresholds": [dict(r) for r in aggregate.rain_thresholds(c)],
     }
