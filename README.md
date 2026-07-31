@@ -20,7 +20,11 @@ terra/               de pijplijn: land -> regio -> gemeente -> perceel
 seed/                wat de site nu toont, als invoer voor de database
 terra/fetch/         sonde en ophalers; de sonde eerst, dan pas downloaden
 terra/aggregate.py   regiowaarden afleiden uit de gemeentelaag; geen download
-tests/               48 tests, waarvan een de site tegen de database aanhoudt
+terra/manual.py      inname van handmatige bronnen, met herkomstplicht en sha256
+terra/enrich.py      handmatige verrijking als tabel; gedeeltelijk mag, blokkeert nooit
+terra/listings.py    advertenties, met de herkomstconstraint overeind en prijsverloop
+manual/              waar die bestanden binnenkomen, plus het manifest
+tests/               95 tests, waarvan een de site tegen de database aanhoudt
 ```
 
 ## De drie ideeen waar de rest uit volgt
@@ -30,12 +34,16 @@ draagt `quality` (ver/ind/mis), `comparable`, `source_id` en `observed_at`. Daar
 is de rijpheidspoort een SQL-view en geen handmatige telling:
 
 ```
-tier    | cells | present | verified | betrouwbaar | vergelijkbaar | volledig | poort
-region  |    48 |      39 |       24 |     62 %    |     50 %      |   81 %   | dicht
+tier          cellen  gevuld  betrouw  vergelijk  volledig  poort
+country            1       1     100%      100%      100%    OPEN
+region            18      18      61%       50%      100%    dicht
 ```
 
-Drempels 80 / 100 / 95. De poort staat dicht omdat prijs, neerslag en brand per land
-met verschillende methoden gemeten zijn. `v_blocking_vars` noemt ze met de reden erbij.
+Drempels 80 / 100 / 95. De scope staat sinds 31 juli op **Spanje**: drie regio's
+maal zes variabelen is achttien cellen. De volledigheid sprong daarmee van 81 naar
+100 procent, want alle negen lege cellen zaten in Roemenie, Italie en Bulgarije.
+De vergelijkbaarheid bleef op 50, en dat is het punt: **een kleinere vraag maakt de
+metingen niet beter.** Brand en prijs blokkeren nog steeds.
 
 **2. Niet gemeten is niet goedgekeurd.** Drie statussen, en `pending` is de
 belangrijkste. `parcel_gates()` geeft `None` terug als geen enkele poort toetsbaar is,
@@ -67,6 +75,19 @@ opnieuw uit de database en vergelijkt. Loopt het uiteen, dan faalt de CI en stop
 deploy. Dit is de enige fout in dit project die je nooit ziet, omdat beide kanten er
 kloppend uitzien.
 
+## Scope: Spanje
+
+Sinds 31 juli 2026 rekent de rijpheidspoort alleen over Spanje. Niet omdat het
+onderzoek naar de andere landen weg is (dat staat er nog, met de reden erbij in
+`v_out_of_scope`), maar omdat Roemenie, Italie en Bulgarije in dit model dossiers
+zijn en geen NUTS2-regio's. Ze kunnen dus nooit gemeenten krijgen, en daarmee nooit
+een rastergemeten neerslag. Zolang ze in de noemer stonden kon de vergelijkbaarheid
+per definitie niet naar 100. Dat was een scopeprobleem en geen datakwaliteitsprobleem.
+
+Portugal ligt er voorlopig uit omdat het BUPi-kadaster nog in opbouw is, en dat maakt
+de perceellaag onbetrouwbaar. Beira Interior scoorde goed op water; dat dossier blijft
+staan voor later.
+
 ## Wat de pijplijn nu zegt, en het gaat tegen de site in
 
 - **Castilla y Leon is de enige regio met een volledige score: 74 van 100.**
@@ -79,6 +100,34 @@ kloppend uitzien.
 Het regiofilter van 60 procent wijst op dit moment **niets** af, en dat is opzet: een
 streng filter op dunne data wijst geen regio's af maar meetfouten. Het begint pas te
 selecteren zodra de rijpheidspoort opengaat.
+
+## De handmatige helft heeft nu ook een pad
+
+Acht van de achttien bronnen zijn niet te automatiseren. Voor de tien andere stonden
+er ophalers klaar; voor deze acht stond er niets. Dat was scheef, want juist daar zit
+de poort die de nachtelijke taak niet kan nemen.
+
+`terra/manual.py` en de map `manual/` doen daar hetzelfde wat de constraint voor
+advertenties doet: **geen herkomst, geen inname.** Verplicht per bestand: waar het
+vandaan komt, wanneer het is opgehaald, en door wie. Plus een sha256 die het manifest
+falsifieerbaar maakt: wordt het bestand later vervangen zonder dat het manifest
+meebeweegt, dan stopt de inname in plaats van dat er stilletjes iets anders binnenkomt.
+
+Een bron die ook automatisch kan, met de hand innemen mag, maar niet per ongeluk:
+daar is `bewust_handmatig` voor. Je vervangt dan de herkomst van een download door
+die van een mens, en dat hoort een besluit te zijn.
+
+**En het mag nooit blokkeren.** Verzamelen en met de hand verrijken moet altijd
+kunnen, dus: een gedeeltelijke levering is geldig, een onbekende gemeentecode is een
+rapport en geen fout, en `python -m terra.manual` eindigt met exit 0 ook als er iets
+geweigerd is. Een fout in een los PDF hoort de keten niet stil te zetten. Voor een
+controle-workflow is er `--strict`.
+
+```bash
+# bestand in manual/ zetten, regel in manual/manifest.json, dan:
+python -m terra.manual --stempel   # vult ontbrekende hashes aan
+python -m terra.manual             # keurt en neemt in
+```
 
 ## De eerlijke grens van "automatisch"
 
@@ -100,7 +149,7 @@ precies de bron die we niet mogen automatiseren. Daarom staat er nog geen cronjo
 ```bash
 export DATABASE_URL=postgresql://terra:terra@127.0.0.1:5432/terra
 bash scripts/bootstrap.sh     # schema, views, constraints, inname, export
-python -m pytest -q           # 48 tests
+python -m pytest -q           # 95 tests
 python -m http.server 8000 --directory site
 ```
 
@@ -194,7 +243,19 @@ gevaarlijkste soort fout.
 - De gemeentelaag is leeg. `t2_municipality` logt zijn eigen leegte. Dit is de
   volgende stap, en ook de stap die de rijpheidspoort opent: de spreiding **binnen**
   een regio was groter dan die **tussen** regio's (2,51 tegen 2,02 voor neerslag).
-- **Brand heeft nog geen ophaler.** Het EFFIS-endpoint gaf 200 met `text/html`, dus
+- **Brand heeft een ophaler maar nog geen bron.** `terra/fetch/fires.py` en de
+  bijbehorende views zijn af en getest op een fixture: verbrand oppervlak per
+  gemeente per jaar via de doorsnede (niet de hele perimeter), een meerjarige
+  basiskans over de volledige periode (niet alleen de brandjaren), en een
+  kwaliteitscode die naar `ind` zakt zodra de kans op een enkel brandjaar rust.
+  Het venster staat vast op **vijftien jaar** (`config.FIRE_WINDOW_YEARS`), want
+  daarvoor verschilden landgebruik en brandbestrijding in Spanje te veel. Venster en
+  dekking zijn twee aparte getallen: levert de bron maar een deel van die vijftien,
+  dan blijft de noemer vijftien en zakt de kwaliteitscode. De noemer verkleinen zou
+  de kans mooier maken en het gat verbergen.
+  Wat ontbreekt is het adres. Zet `peek` op `true` in de workflow en kijk wat het
+  EFFIS-endpoint werkelijk teruggeeft.
+- **De oude tekst hieronder blijft staan tot dat rond is.** Het EFFIS-endpoint gaf 200 met `text/html`, dus
   waarschijnlijk een pagina en geen capabilities-document. Draai de sonde met `peek`
   op `true` om te zien wat er echt terugkomt. Blijkt het alleen via het
   aanvraagformulier te kunnen, dan is brand handmatig werk en hoort het in

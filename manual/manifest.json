@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "file": "zar-extremadura.csv",
+      "source_id": "zar-fire-zones",
+      "origin": "https://www.infoex.info/wp-content/uploads/2021/05/Decreto-260-2014-2-dic.pdf",
+      "obtained_at": "2026-07-31",
+      "obtained_by": "Claude, via WebFetch; transcriptie niet nagelopen tegen het origineel",
+      "note": "Anexo I van Decreto 260/2014. LEES manual/ZAR-WAARSCHUWING.md voordat een besluit hierop leunt.",
+      "sha256": "cac8815ff81d8b901e69fdc1a331fc5069798cc3c6a809673f1721e3bcaf4d30"
+    }
+  ]
+}

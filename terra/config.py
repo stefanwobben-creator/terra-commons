@@ -19,6 +19,11 @@ THRESHOLDS = (80, 100, 95)
 # PROFILE_HA is wat de groep wil.
 PROFILE_HA = (20, 90)
 
+# Brandvenster in jaren. Staat ook als literal in sql/007_fire_window.sql; een test
+# houdt die twee tegen elkaar aan, want twee plekken met hetzelfde getal is een
+# belofte die iemand een keer vergeet na te komen.
+FIRE_WINDOW_YEARS = 15
+
 DRY_RUN = os.environ.get("TERRA_DRY_RUN", "0") == "1"
 
 # Elke advertentie moet een URL en een kijkdatum hebben. Zonder dat is een

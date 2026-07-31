@@ -39,9 +39,17 @@ def test_drempels_staan_niet_dubbel_uit_elkaar():
     assert set(THRESHOLDS) <= set(nums), (THRESHOLDS, nums)
 
 
-def test_regio_rijpheid_reproduceert_de_pagina(c):
+def test_regio_rijpheid_binnen_de_scope(c):
+    """Was 62/50/81 over acht regio's, is 61/50/100 over de drie Spaanse.
+
+    De volledigheid springt naar 100 omdat alle negen lege cellen in Roemenie,
+    Italie en Bulgarije zaten. De vergelijkbaarheid blijft op 50: die verbetert
+    niet doordat de scope kleiner wordt, alleen doordat er anders gemeten wordt.
+    """
     r = [x for x in db.q(c, "select * from v_readiness") if x["tier"] == "region"][0]
-    assert (int(r["reliable_pct"]), int(r["comparable_pct"]), int(r["complete_pct"])) == (62, 50, 81)
+    assert r["cells"] == 18, "drie Spaanse regio's maal zes variabelen"
+    assert int(r["complete_pct"]) == 100
+    assert int(r["comparable_pct"]) == 50
     assert r["gate_open"] is False
 
 

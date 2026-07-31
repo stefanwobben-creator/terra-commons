@@ -63,15 +63,16 @@ def load_sources(c) -> int:
 def load_countries(c) -> int:
     n = db.many(c, """
         insert into country (code,name,buy_allowed,buy_conditions,use_obligation,
-                             exit_levy_pct,exit_levy_years)
-        values (%s,%s,%s,%s,%s,%s,%s)
+                             exit_levy_pct,exit_levy_years,in_scope,scope_note)
+        values (%s,%s,%s,%s,%s,%s,%s,%s,%s)
         on conflict (code) do update set
           buy_allowed=excluded.buy_allowed, buy_conditions=excluded.buy_conditions,
           use_obligation=excluded.use_obligation, exit_levy_pct=excluded.exit_levy_pct,
-          exit_levy_years=excluded.exit_levy_years
+          exit_levy_years=excluded.exit_levy_years, in_scope=excluded.in_scope,
+          scope_note=excluded.scope_note
     """, [(k["code"], k["name"], k["buy_allowed"], k["buy_conditions"],
-           k["use_obligation"], k["exit_levy_pct"], k["exit_levy_years"])
-          for k in COUNTRIES])
+           k["use_obligation"], k["exit_levy_pct"], k["exit_levy_years"],
+           k["in_scope"], k["scope_note"]) for k in COUNTRIES])
     # De landpoort is zelf een observatie, met een kwaliteitscode. Anders staat er
     # straks een harde false bij Bulgarije waar 'niet gelezen' hoort te staan.
     db.many(c, _OBS_SQL, [

@@ -7,6 +7,8 @@ from __future__ import annotations
 
 COUNTRIES: tuple[dict, ...] = (
     dict(
+        in_scope=True, scope_note=(
+            "Binnen de scope. Het enige land waar alle drie de lagen bestaan: gemeenten met open geometrie, een raster met uniforme periode, en SIGPAC-percelen."),
         code="ES", name="Spanje",
         buy_allowed=True, buy_conditions=None, use_obligation=False,
         exit_levy_pct=None, exit_levy_years=None, parcel_geometry_open=True,
@@ -17,6 +19,8 @@ COUNTRIES: tuple[dict, ...] = (
               "de heffing uit art. 21 tot 27 is geschrapt door Ley 8/2002."),
     ),
     dict(
+        in_scope=False, scope_note=(
+            "Buiten de scope, voorlopig. Het onderzoek blijft staan en Beira Interior scoorde goed op water; het BUPi-kadaster is nog in opbouw en dat maakt de perceellaag onbetrouwbaar."),
         code="PT", name="Portugal",
         buy_allowed=True, buy_conditions=None, use_obligation=False,
         exit_levy_pct=None, exit_levy_years=None, parcel_geometry_open=True,
@@ -25,6 +29,8 @@ COUNTRIES: tuple[dict, ...] = (
               "opbouw, wat een perceelrisico is en geen landpoort."),
     ),
     dict(
+        in_scope=False, scope_note=(
+            "Buiten de scope. De landpoort staat dicht, en het dossier dekt meerdere NUTS-regio's zonder eigen gemeentelaag."),
         code="RO", name="Roemenie",
         buy_allowed=True,
         buy_conditions=("vijf jaar woonplaats, vijf jaar landbouwactiviteit en fiscale "
@@ -38,6 +44,8 @@ COUNTRIES: tuple[dict, ...] = (
               "onherstelbaar."),
     ),
     dict(
+        in_scope=False, scope_note=(
+            "Buiten de scope. Basilicata en Sardinie samen zijn geen NUTS2-eenheid, dus deze regio kan per definitie geen gemeenten krijgen."),
         code="IT", name="Italie",
         buy_allowed=True, buy_conditions=None, use_obligation=False,
         exit_levy_pct=None, exit_levy_years=None, parcel_geometry_open=True,
@@ -47,6 +55,8 @@ COUNTRIES: tuple[dict, ...] = (
               "niet ingewonnen, dus de regioscore blijft leeg."),
     ),
     dict(
+        in_scope=False, scope_note=(
+            "Buiten de scope. De wettekst is nooit gelezen, en zolang dat zo is is dit geen vergelijking maar een gat."),
         code="BG", name="Bulgarije",
         buy_allowed=None,
         buy_conditions=("vijfjaarseis uit ZSPZZ art. 3v; status na de EU-toetreding niet "

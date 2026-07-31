@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-31T14:46:03+00:00",
+ "generated_at": "2026-07-31T20:54:25+00:00",
  "thresholds": {
   "rel": 80,
   "cmp": 100,
@@ -160,8 +160,8 @@
     "fire": "ver",
     "access": "ver",
     "cost": "ver",
-    "price": "ind",
-    "cadastre": "ver"
+    "cadastre": "ver",
+    "price": "ind"
    },
    "values": {
     "rain": {
@@ -180,13 +180,13 @@
      "num": 6.9,
      "txt": "6,3–7,5%"
     },
-    "price": {
-     "num": 4750.0,
-     "txt": "3100-6400"
-    },
     "cadastre": {
      "num": null,
      "txt": "Ontbreekt"
+    },
+    "price": {
+     "num": 4750.0,
+     "txt": "3100-6400"
     }
    },
    "score": {
@@ -207,8 +207,8 @@
    "nuts2": null,
    "q": {
     "price": "ver",
-    "cost": "mis",
     "rain": "mis",
+    "cost": "mis",
     "fire": "mis",
     "cadastre": "mis",
     "access": "mis"
@@ -218,11 +218,11 @@
      "num": 1492.0,
      "txt": "1012-1972"
     },
-    "cost": {
+    "rain": {
      "num": null,
      "txt": null
     },
-    "rain": {
+    "cost": {
      "num": null,
      "txt": null
     },
@@ -255,17 +255,17 @@
    "country": "ES",
    "nuts2": "ES41",
    "q": {
-    "price": "ind",
+    "rain": "ver",
     "fire": "ind",
     "cadastre": "ver",
     "access": "ver",
-    "rain": "ver",
+    "price": "ind",
     "cost": "ver"
    },
    "values": {
-    "price": {
-     "num": 2325.0,
-     "txt": "750-3900"
+    "rain": {
+     "num": 600.0,
+     "txt": null
     },
     "fire": {
      "num": 138538.0,
@@ -279,9 +279,9 @@
      "num": null,
      "txt": "good"
     },
-    "rain": {
-     "num": 600.0,
-     "txt": null
+    "price": {
+     "num": 2325.0,
+     "txt": "750-3900"
     },
     "cost": {
      "num": 9.75,
@@ -305,37 +305,37 @@
    "country": "ES",
    "nuts2": "ES43",
    "q": {
-    "cost": "ver",
-    "cadastre": "ver",
     "access": "ver",
+    "cost": "ver",
     "rain": "ver",
-    "price": "ind",
-    "fire": "ind"
+    "cadastre": "ver",
+    "fire": "ind",
+    "price": "ind"
    },
    "values": {
-    "cost": {
-     "num": 9.5,
-     "txt": "9–10%"
-    },
-    "cadastre": {
-     "num": null,
-     "txt": "Goed"
-    },
     "access": {
      "num": null,
      "txt": "good"
+    },
+    "cost": {
+     "num": 9.5,
+     "txt": "9–10%"
     },
     "rain": {
      "num": 1192.1,
      "txt": null
     },
-    "price": {
-     "num": 4250.0,
-     "txt": "3500-5000"
+    "cadastre": {
+     "num": null,
+     "txt": "Goed"
     },
     "fire": {
      "num": 10863.0,
      "txt": "brandvlakte 2023"
+    },
+    "price": {
+     "num": 4250.0,
+     "txt": "3500-5000"
     }
    },
    "score": {
@@ -404,14 +404,22 @@
    "country": "IT",
    "nuts2": null,
    "q": {
+    "price": "ver",
+    "rain": "mis",
     "cost": "ver",
     "fire": "mis",
     "cadastre": "ind",
-    "price": "ver",
-    "rain": "mis",
     "access": "ind"
    },
    "values": {
+    "price": {
+     "num": 4900.0,
+     "txt": "4800-5000"
+    },
+    "rain": {
+     "num": null,
+     "txt": null
+    },
     "cost": {
      "num": 16.5,
      "txt": "15–18%"
@@ -423,14 +431,6 @@
     "cadastre": {
      "num": null,
      "txt": "Zwak"
-    },
-    "price": {
-     "num": 4900.0,
-     "txt": "4800-5000"
-    },
-    "rain": {
-     "num": null,
-     "txt": null
     },
     "access": {
      "num": null,
